@@ -7,68 +7,69 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background: #fffde7;
+      background: #e3f2fd; /* biru muda */
     }
     .header {
-      background: #ffeb3b;
       text-align: center;
-      padding: 20px 10px 10px 10px;
-      font-size: 2em;
+      padding: 14px 0 8px 0;
+      font-size: 1.3em; /* lebih kecil */
       font-weight: bold;
       letter-spacing: 1px;
-      color: #333;
+      color: #1565c0; /* biru tua */
+      background: none; /* hilangkan background */
     }
     .navbar {
       display: flex;
-      flex-wrap: wrap;
-      background: #ffeb3b;
-      justify-content: space-around;
-      padding: 0;
-      margin: 0;
-      border-bottom: 2px solid #ffe082;
+      flex-wrap: nowrap;
+      background: #ffffff; /* putih */
+      border-bottom: 2px solid #90caf9; /* biru muda */
+      padding: 0 10px;
     }
     .nav-item {
-      flex: 1 1 25%;
+      flex: 1 1 auto;
       text-align: center;
-      padding: 15px 0;
+      padding: 10px 0;
       cursor: pointer;
-      color: #333;
-      font-size: 1.1em;
+      color: #1565c0; /* biru */
+      font-size: 1em;
       transition: background 0.2s, color 0.2s;
-      border-right: 1px solid #ffe082;
+      border-right: 1px solid #90caf9;
+      white-space: nowrap; /* satu baris */
+      line-height: 1.2;
     }
     .nav-item:last-child {
       border-right: none;
     }
     .nav-item:hover, .nav-item.active {
-      background: #fff176;
-      color: #0d47a1;
+      background: #bbdefb; /* biru sangat muda */
+      color: #0d47a1; /* biru lebih tua */
     }
     .content {
       padding: 15px;
+      background: #ffffff;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      background: #fffde7;
+      background: #e3f2fd; /* biru muda */
     }
     th, td {
-      border: 1px solid #ffe082;
+      border: 1px solid #90caf9;
       padding: 8px 4px;
       text-align: left;
     }
     th {
-      background: #fff176;
-      color: #333;
+      background: #bbdefb; /* biru sangat muda */
+      color: #1565c0;
     }
     @media (max-width: 600px) {
       .header {
-        font-size: 1.3em;
-        padding: 14px 5px 7px 5px;
+        font-size: 1em;
+        padding: 10px 0 6px 0;
       }
       .nav-item {
         font-size: 0.95em;
-        padding: 10px 0;
+        padding: 8px 0;
       }
       .content {
         padding: 8px;
