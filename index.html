@@ -83,7 +83,11 @@
     th, td {
       padding: 8px 12px;
       border-bottom: 1px solid #90caf9;
+      border-right: 1px solid #90caf9;
       text-align: left;
+    }
+    th:last-child, td:last-child {
+      border-right: none;
     }
     th {
       background: #64b5f6;
@@ -130,37 +134,47 @@
     const tableContainer = document.getElementById('table-container');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    function renderTable(data) {
-      if (!data || data.length === 0) {
-        tableContainer.innerHTML = '<p>Data tidak ditemukan.</p>';
-        return;
+    function renderTable(data, csvFile) {
+  if (!data || data.length === 0) {
+    tableContainer.innerHTML = '<p>Data tidak ditemukan.</p>';
+    return;
+  }
+  data = data.filter(row => row.some(cell => cell !== ''));
+  let html = '<table><thead><tr>';
+  data[0].forEach(h => html += `<th>${h}</th>`);
+  html += '</tr></thead><tbody>';
+  let siangIdx = -1, malamIdx = -1;
+  if (csvFile === "urban.csv") {
+    siangIdx = data[0].findIndex(h => h.trim().toLowerCase() === "siang");
+    malamIdx = data[0].findIndex(h => h.trim().toLowerCase() === "malam");
+  }
+  for (let i = 1; i < data.length; i++) {
+    html += '<tr>';
+    data[i].forEach((cell, idx) => {
+      if ((idx === siangIdx || idx === malamIdx) && csvFile === "urban.csv") {
+        html += `<td style="text-align:center">${cell}</td>`;
+      } else {
+        html += `<td>${cell}</td>`;
       }
-      // clean up empty trailing rows
-      data = data.filter(row => row.some(cell => cell !== ''));
-      let html = '<table><thead><tr>';
-      data[0].forEach(h => html += `<th>${h}</th>`);
-      html += '</tr></thead><tbody>';
-      for (let i = 1; i < data.length; i++) {
-        html += '<tr>';
-        data[i].forEach(cell => html += `<td>${cell}</td>`);
-        html += '</tr>';
-      }
-      html += '</tbody></table>';
-      tableContainer.innerHTML = html;
-    }
+    });
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  tableContainer.innerHTML = html;
+}
 
-    function loadCSV(csvFile) {
-      tableContainer.innerHTML = '<p>Memuat data...</p>';
-      Papa.parse(csvFile, {
-        download: true,
-        complete: function(results) {
-          renderTable(results.data);
-        },
-        error: function() {
-          tableContainer.innerHTML = "<p>Gagal memuat data.</p>";
-        }
-      });
+function loadCSV(csvFile) {
+  tableContainer.innerHTML = '<p>Memuat data...</p>';
+  Papa.parse(csvFile, {
+    download: true,
+    complete: function(results) {
+      renderTable(results.data, csvFile);
+    },
+    error: function() {
+      tableContainer.innerHTML = "<p>Gagal memuat data.</p>";
     }
+  });
+}
 
     navLinks.forEach(link => {
       link.addEventListener('click', function() {
