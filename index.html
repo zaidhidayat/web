@@ -1,1 +1,141 @@
-
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Monitoring PJ Batur</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fffde7;
+    }
+    .header {
+      background: #ffeb3b;
+      text-align: center;
+      padding: 20px 10px 10px 10px;
+      font-size: 2em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #333;
+    }
+    .navbar {
+      display: flex;
+      flex-wrap: wrap;
+      background: #ffeb3b;
+      justify-content: space-around;
+      padding: 0;
+      margin: 0;
+      border-bottom: 2px solid #ffe082;
+    }
+    .nav-item {
+      flex: 1 1 25%;
+      text-align: center;
+      padding: 15px 0;
+      cursor: pointer;
+      color: #333;
+      font-size: 1.1em;
+      transition: background 0.2s, color 0.2s;
+      border-right: 1px solid #ffe082;
+    }
+    .nav-item:last-child {
+      border-right: none;
+    }
+    .nav-item:hover, .nav-item.active {
+      background: #fff176;
+      color: #0d47a1;
+    }
+    .content {
+      padding: 15px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fffde7;
+    }
+    th, td {
+      border: 1px solid #ffe082;
+      padding: 8px 4px;
+      text-align: left;
+    }
+    th {
+      background: #fff176;
+      color: #333;
+    }
+    @media (max-width: 600px) {
+      .header {
+        font-size: 1.3em;
+        padding: 14px 5px 7px 5px;
+      }
+      .nav-item {
+        font-size: 0.95em;
+        padding: 10px 0;
+      }
+      .content {
+        padding: 8px;
+      }
+      th, td {
+        font-size: 0.95em;
+        padding: 6px 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Job Monitoring PJ Batur</div>
+  <div class="navbar">
+    <div class="nav-item" onclick="showContent('ukur')">Ukur Beban</div>
+    <div class="nav-item" onclick="showContent('patroli')">Patroli</div>
+    <div class="nav-item" onclick="showContent('mandorline')" id="mandorline-tab">Mandorline</div>
+    <div class="nav-item" onclick="showContent('pemadaman')">Pemadaman</div>
+  </div>
+  <div class="content" id="main-content">
+    Silakan pilih menu di atas.
+  </div>
+  <script>
+    function showContent(menu) {
+      // Hapus semua .active
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      let html = '';
+      if (menu === 'mandorline') {
+        document.getElementById('mandorline-tab').classList.add('active');
+        html = `
+          <h3>Data Mandorline</h3>
+          <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>NAMA</th>
+                <th>DARI</th>
+                <th>SAMPAI</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>DAYAT</td><td>DNG01.001</td><td>REC. DNG01.069 TERMASUK TEPING KARANGSARI DIENG</td></tr>
+              <tr><td></td><td>DNG03.001</td><td>REC.DNG03 083</td></tr>
+              <tr><td>WANTO</td><td>ABSW DNG02.140</td><td>LBS DNG02 215</td></tr>
+              <tr><td></td><td>DNG02.145.S001</td><td>LBS DNG02.145.S069</td></tr>
+              <tr><td>RAHMAD</td><td>DNG02.001</td><td>ABSW DNG02.140 DAN LBS DNG02.083U006</td></tr>
+              <tr><td>AAN</td><td>REC.DNG03.083</td><td>LBS DNG02.083U006 DAN ABSW DNG03 131</td></tr>
+              <tr><td>YASIN</td><td>ABSW DNG03.131</td><td>DNG03.207</td></tr>
+              <tr><td>WALUYO</td><td>REC. DNG01.069</td><td>ABSW DNG01.197</td></tr>
+              <tr><td>AGUS</td><td>ABSW DNG01 197</td><td>ABSW WBO01.169 TERMASUK TEPING DNG01 224 T</td></tr>
+              <tr><td>IRFAN</td><td>LBS WBO01 147 </td><td>ABSW WBO01.169 TERMASUK TEPING WBO 01.163 T DAN TEPING WBO01 169 B</td></tr>
+            </tbody>
+          </table>
+          </div>
+        `;
+      } else if (menu === 'ukur') {
+        document.querySelectorAll('.nav-item')[0].classList.add('active');
+        html = "<h3>Ukur Beban</h3><p>Konten untuk Ukur Beban.</p>";
+      } else if (menu === 'patroli') {
+        document.querySelectorAll('.nav-item')[1].classList.add('active');
+        html = "<h3>Patroli</h3><p>Konten untuk Patroli.</p>";
+      } else if (menu === 'pemadaman') {
+        document.querySelectorAll('.nav-item')[3].classList.add('active');
+        html = "<h3>Pemadaman</h3><p>Konten untuk Pemadaman.</p>";
+      }
+      document.getElementById('main-content').innerHTML = html;
+    }
+  </script>
+</body>
+</html>
