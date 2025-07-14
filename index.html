@@ -58,7 +58,42 @@
     <a href="#patroli">Patroli</a>
     <a href="#mandorline">Mandorline</a>
     <a href="#pemadaman">Pemadaman</a>
-  </nav>
+  <!-- Contoh navbar -->
+<nav>
+  <a href="#" id="mandorline-btn">Mandorline</a>
+</nav>
+
+<!-- Tempat tampilkan tabel -->
+<div id="mandorline-table"></div>
+
+<script>
+// Fungsi untuk mengubah CSV ke HTML Table
+function csvToTable(csv) {
+  const lines = csv.trim().split('\n');
+  const rows = lines.map(line => line.split(','));
+  let html = '<table border="1"><thead><tr>';
+  html += rows[0].map(cell => `<th>${cell}</th>`).join('');
+  html += '</tr></thead><tbody>';
+  for (let i = 1; i < rows.length; i++) {
+    html += '<tr>' + rows[i].map(cell => `<td>${cell}</td>`).join('') + '</tr>';
+  }
+  html += '</tbody></table>';
+  return html;
+}
+
+// Event listener
+document.getElementById('mandorline-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  fetch('mandorline.csv')
+    .then(response => response.text())
+    .then(csv => {
+      document.getElementById('mandorline-table').innerHTML = csvToTable(csv);
+    })
+    .catch(err => {
+      document.getElementById('mandorline-table').innerHTML = 'Gagal memuat data.';
+    });
+});
+</script>
 
   <!-- Konten interaktif dapat ditambahkan di sini -->
 
