@@ -53,12 +53,20 @@
       transition: background 0.2s, color 0.2s;
       cursor: pointer;
       border: none;
-      background: transparent;
+      background: #fff;          /* default putih */
       outline: none;
     }
-    .nav-link:hover, .nav-link.active {
+    .nav-link:not(.active):hover {
       background: #1976d2;
       color: #fff;
+    }
+    .nav-link.active {
+      background: #1976d2;
+      color: #fff;
+    }
+    .nav-link:not(.active) {
+      background: #fff;
+      color: #0a2a43;
     }
     .table-container {
       margin: 20px;
