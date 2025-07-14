@@ -1,142 +1,171 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
   <title>Job Monitoring PJ Batur</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Papaparse CDN untuk parsing CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      background: #e3f2fd; /* biru muda */
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: url('batur.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      color: #0a2a43;
+      backdrop-filter: blur(2px);
     }
-    .header {
+    .container {
+      background: rgba(255, 255, 255, 0.90);
+      margin: 0 auto;
+      max-width: 700px;
+      min-height: 100vh;
+      padding-bottom: 40px;
+      box-shadow: 0 2px 14px 0 rgba(0,0,0,0.12);
+    }
+    h1 {
       text-align: center;
-      padding: 14px 0 8px 0;
-      font-size: 1.3em; /* lebih kecil */
-      font-weight: bold;
+      color: #1976d2;
+      margin-top: 0;
+      padding: 25px 0 10px 0;
+      font-weight: 700;
       letter-spacing: 1px;
-      color: #1565c0; /* biru tua */
-      background: none; /* hilangkan background */
+      text-shadow: 0 2px 4px #b3e0ff;
     }
     .navbar {
       display: flex;
-      flex-wrap: nowrap;
-      background: #ffffff; /* putih */
-      border-bottom: 2px solid #90caf9; /* biru muda */
-      padding: 0 10px;
+      justify-content: space-around;
+      background: linear-gradient(90deg, #b3e0ff 0%, #1976d2 100%);
+      border-radius: 8px;
+      margin: 0 20px 25px 20px;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+      overflow: auto;
     }
-    .nav-item {
-      flex: 1 1 auto;
+    .nav-link {
+      flex: 1 1 0;
       text-align: center;
-      padding: 10px 0;
-      cursor: pointer;
-      color: #1565c0; /* biru */
-      font-size: 1em;
+      padding: 14px 0;
+      color: #0a2a43;
+      font-size: 1rem;
+      text-decoration: none;
+      font-weight: 500;
       transition: background 0.2s, color 0.2s;
-      border-right: 1px solid #90caf9;
-      white-space: nowrap; /* satu baris */
-      line-height: 1.2;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      outline: none;
     }
-    .nav-item:last-child {
-      border-right: none;
+    .nav-link:hover, .nav-link.active {
+      background: #1976d2;
+      color: #fff;
     }
-    .nav-item:hover, .nav-item.active {
-      background: #bbdefb; /* biru sangat muda */
-      color: #0d47a1; /* biru lebih tua */
-    }
-    .content {
-      padding: 15px;
-      background: #ffffff;
+    .table-container {
+      margin: 20px;
+      background: rgba(255,255,255,0.96);
+      border-radius: 8px;
+      box-shadow: 0 1px 5px 0 rgba(25, 118, 210, 0.10);
+      overflow-x: auto;
+      padding: 10px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      background: #e3f2fd; /* biru muda */
+      margin: 0 auto;
+      font-size: 0.97em;
     }
     th, td {
-      border: 1px solid #90caf9;
-      padding: 8px 4px;
+      padding: 8px 12px;
+      border-bottom: 1px solid #90caf9;
       text-align: left;
     }
     th {
-      background: #bbdefb; /* biru sangat muda */
-      color: #1565c0;
+      background: #64b5f6;
+      color: #fff;
+      font-weight: 600;
     }
     @media (max-width: 600px) {
-      .header {
-        font-size: 1em;
-        padding: 10px 0 6px 0;
+      .container {
+        margin: 0;
+        max-width: 100vw;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
       }
-      .nav-item {
+      .navbar {
+        margin: 0 8px 16px 8px;
         font-size: 0.95em;
-        padding: 8px 0;
       }
-      .content {
-        padding: 8px;
+      .table-container {
+        margin: 10px 2px;
+        padding: 6px;
       }
-      th, td {
-        font-size: 0.95em;
-        padding: 6px 2px;
+      h1 {
+        font-size: 1.3em;
+        padding: 18px 0 8px 0;
       }
     }
   </style>
 </head>
 <body>
-  <div class="header">Job Monitoring PJ Batur</div>
-  <div class="navbar">
-    <div class="nav-item" onclick="showContent('ukur')">Ukur Beban</div>
-    <div class="nav-item" onclick="showContent('patroli')">Patroli</div>
-    <div class="nav-item" onclick="showContent('mandorline')" id="mandorline-tab">Mandorline</div>
-    <div class="nav-item" onclick="showContent('pemadaman')">Pemadaman</div>
-  </div>
-  <div class="content" id="main-content">
-    Silakan pilih menu di atas.
+  <div class="container">
+    <h1>Job Monitoring PJ Batur</h1>
+    <div class="navbar">
+      <button class="nav-link active" data-csv="urban.csv">Ukur Beban</button>
+      <button class="nav-link" data-csv="mandorline.csv">Mandorline</button>
+      <button class="nav-link" data-csv="pemadaman.csv">Pemadaman</button>
+      <button class="nav-link" data-csv="patroli.csv">Patroli</button>
+    </div>
+    <div class="table-container" id="table-container">
+      <p>Memuat data...</p>
+    </div>
   </div>
   <script>
-    function showContent(menu) {
-      // Hapus semua .active
-      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-      let html = '';
-      if (menu === 'mandorline') {
-        document.getElementById('mandorline-tab').classList.add('active');
-        html = `
-          <h3>Data Mandorline</h3>
-          <div style="overflow-x:auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>NAMA</th>
-                <th>DARI</th>
-                <th>SAMPAI</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>DAYAT</td><td>DNG01.001</td><td>REC. DNG01.069 TERMASUK TEPING KARANGSARI DIENG</td></tr>
-              <tr><td></td><td>DNG03.001</td><td>REC.DNG03 083</td></tr>
-              <tr><td>WANTO</td><td>ABSW DNG02.140</td><td>LBS DNG02 215</td></tr>
-              <tr><td></td><td>DNG02.145.S001</td><td>LBS DNG02.145.S069</td></tr>
-              <tr><td>RAHMAD</td><td>DNG02.001</td><td>ABSW DNG02.140 DAN LBS DNG02.083U006</td></tr>
-              <tr><td>AAN</td><td>REC.DNG03.083</td><td>LBS DNG02.083U006 DAN ABSW DNG03 131</td></tr>
-              <tr><td>YASIN</td><td>ABSW DNG03.131</td><td>DNG03.207</td></tr>
-              <tr><td>WALUYO</td><td>REC. DNG01.069</td><td>ABSW DNG01.197</td></tr>
-              <tr><td>AGUS</td><td>ABSW DNG01 197</td><td>ABSW WBO01.169 TERMASUK TEPING DNG01 224 T</td></tr>
-              <tr><td>IRFAN</td><td>LBS WBO01 147 </td><td>ABSW WBO01.169 TERMASUK TEPING WBO 01.163 T DAN TEPING WBO01 169 B</td></tr>
-            </tbody>
-          </table>
-          </div>
-        `;
-      } else if (menu === 'ukur') {
-        document.querySelectorAll('.nav-item')[0].classList.add('active');
-        html = "<h3>Ukur Beban</h3><p>Konten untuk Ukur Beban.</p>";
-      } else if (menu === 'patroli') {
-        document.querySelectorAll('.nav-item')[1].classList.add('active');
-        html = "<h3>Patroli</h3><p>Konten untuk Patroli.</p>";
-      } else if (menu === 'pemadaman') {
-        document.querySelectorAll('.nav-item')[3].classList.add('active');
-        html = "<h3>Pemadaman</h3><p>Konten untuk Pemadaman.</p>";
+    const tableContainer = document.getElementById('table-container');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function renderTable(data) {
+      if (!data || data.length === 0) {
+        tableContainer.innerHTML = '<p>Data tidak ditemukan.</p>';
+        return;
       }
-      document.getElementById('main-content').innerHTML = html;
+      // clean up empty trailing rows
+      data = data.filter(row => row.some(cell => cell !== ''));
+      let html = '<table><thead><tr>';
+      data[0].forEach(h => html += `<th>${h}</th>`);
+      html += '</tr></thead><tbody>';
+      for (let i = 1; i < data.length; i++) {
+        html += '<tr>';
+        data[i].forEach(cell => html += `<td>${cell}</td>`);
+        html += '</tr>';
+      }
+      html += '</tbody></table>';
+      tableContainer.innerHTML = html;
     }
+
+    function loadCSV(csvFile) {
+      tableContainer.innerHTML = '<p>Memuat data...</p>';
+      Papa.parse(csvFile, {
+        download: true,
+        complete: function(results) {
+          renderTable(results.data);
+        },
+        error: function() {
+          tableContainer.innerHTML = "<p>Gagal memuat data.</p>";
+        }
+      });
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        loadCSV(this.getAttribute('data-csv'));
+      });
+    });
+
+    // Load default (Ukur Beban)
+    loadCSV('urban.csv');
   </script>
 </body>
 </html>
