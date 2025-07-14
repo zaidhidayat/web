@@ -1,0 +1,9 @@
+th, td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #90caf9;
+  border-right: 1px solid #90caf9; /* garis kolom */
+  text-align: left;
+}
+th:last-child, td:last-child {
+  border-right: none; /* kolom terakhir tanpa garis kanan */
+}
