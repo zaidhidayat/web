@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PJ BATUR</title>
+    <style>
+        :root {
+            --primary-blue: #4a9cff;
+            --light-blue: #e6f2ff;
+            --dark-blue: #0066cc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            background-color: var(--dark-blue);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            padding: 1rem 1.5rem;
+        }
+
+        .nav-item:hover {
+            color: var(--light-blue);
+            background-color: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--light-blue);
+            transition: width 0.3s ease-in-out;
+        }
+
+        .nav-item:hover::after {
+            width: 80%;
+        }
+
+        .nav-item.active {
+            color: var(--light-blue);
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        .nav-item.active::after {
+            width: 80%;
+            height: 3px;
+        }
+
+        .container {
+            max-width: 95%;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-blue);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: var(--light-blue);
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PJ BATUR</h1>
+    </header>
+
+    <nav class="navbar">
+        <a href="#" class="active nav-item" data-csv="urban.csv">Urban</a>
+        <a href="#" class="nav-item" data-csv="patroli.csv">Patroli</a>
+        <a href="#" class="nav-item" data-csv="mandorline.csv">Mandorline</a>
+        <a href="#" class="nav-item" data-csv="pemadaman.csv">Pemadaman</a>
+    </nav>
+
+    <div class="container">
+        <div id="loading" class="loading">Memuat data Urban...</div>
+        <div id="table-container"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('nav a');
+            const tableContainer = document.getElementById('table-container');
+            const loadingElement = document.getElementById('loading');
+            
+            // Load initial data (Urban)
+            loadCSV('urban.csv', true);
+
+            // Add click event listeners to nav links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Update active link
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Get which CSV to load
+                    const csvFile = this.getAttribute('data-csv');
+                    const isUrban = csvFile === 'urban.csv';
+                    
+                    loadingElement.textContent = `Memuat data ${this.textContent}...`;
+                    tableContainer.innerHTML = '';
+                    
+                    loadCSV(csvFile, isUrban);
+                });
+            });
+
+            function loadCSV(file, isUrban) {
+                fetch(file)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('File tidak ditemukan');
+                        }
+                        return response.text();
+                    })
+                    .then(text => {
+                        loadingElement.style.display = 'none';
+                        displayCSV(text, isUrban);
+                    })
+                    .catch(error => {
+                        loadingElement.textContent = `Gagal memuat data: ${error.message}`;
+                        console.error('Error:', error);
+                    });
+            }
+
+            function displayCSV(csvText, isUrban) {
+                const lines = csvText.split('\n');
+                const headers = lines[0].split(',');
+                
+                let table = document.createElement('table');
+                let thead = document.createElement('thead');
+                let tbody = document.createElement('tbody');
+                
+                // Create header row
+                let headerRow = document.createElement('tr');
+                headers.forEach(header => {
+                    let th = document.createElement('th');
+                    th.textContent = header.trim();
+                    headerRow.appendChild(th);
+                });
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+                
+                // Create data rows
+                for (let i = 1; i < lines.length; i++) {
+                    if (lines[i].trim() === '') continue;
+                    
+                    let row = document.createElement('tr');
+                    let cells = lines[i].split(',');
+                    
+                    cells.forEach((cell, index) => {
+                        let td = document.createElement('td');
+                        
+                        if (isUrban && (index === 2 || index === 3)) {
+                            td.className = 'center';
+                        }
+                        
+                        td.textContent = cell.trim();
+                        row.appendChild(td);
+                    });
+                    
+                    tbody.appendChild(row);
+                }
+                
+                table.appendChild(tbody);
+                
+                // Adjust table width based on type
+                if (isUrban) {
+                    table.style.width = '100%';
+                } else {
+                    table.style.width = '130%';
+                }
+                
+                tableContainer.appendChild(table);
+            }
+        });
+    </script>
+</body>
+</html>
