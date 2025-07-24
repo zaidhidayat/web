@@ -18,16 +18,20 @@
             background-color: #f9f9f9;
             color: #333;
             width: 100%;
-            overflow-x: hidden;
         }
 
         header {
-            background-color: var(--primary-blue);
+            background: var(--primary-blue) url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7b8a4ea6-32b0-44e7-91c5-edfbba621bfa.png') no-repeat center;
+            background-size: cover;
             color: white;
             text-align: center;
             padding: 1.5rem 0;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            height: 60px;
         }
 
         header h1 {
@@ -42,6 +46,9 @@
             width: 100%;
             margin: 0;
             padding: 0;
+            position: fixed;
+            top: 120px;
+            z-index: 100;
         }
 
         .navbar {
@@ -99,10 +106,10 @@
 
         .container {
             width: 100%;
-            max-width: 100%;
-            margin: 2rem auto;
+            margin-top: 170px;
             padding: 0 0.5rem;
             overflow-x: auto;
+            max-width: none;
         }
 
         table {
@@ -112,6 +119,8 @@
             border-radius: 5px;
             overflow: hidden;
             border: 1px solid var(--light-blue);
+            table-layout: auto;
+            margin-top: 0;
         }
 
         th, td {
