@@ -5,5 +5,5 @@ th, td {
   text-align: left;
 }
 th:last-child, td:last-child {
-  border-right: none; /* kolom terakhir tanpa garis kanan */
+  border-right: 1px solid #90caf9; /* kolom terakhir tanpa garis kanan */
 }
