@@ -3,454 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoring Pekerjaan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>PJ Batur</title>
     <style>
         :root {
-            --primary-light: #e6f2ff;
-            --primary-dark: #1a56a7;
+            --blue-light: #e1f5fe;
+            --blue: #03a9f4;
+            --blue-dark: #0288d1;
+            --yellow: #ffeb3b;
+            --white: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--primary-light);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background-color: var(--blue-light);
+            color: #333;
         }
         
-        header {
-            background-color: white;
-            padding: 1rem;
+        /* Header */
+        .header {
+            width: 100%;
+            height: 120px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue) 100%);
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
+            transition: all 0.3s ease;
         }
         
-        .header-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
+        .header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
-        main {
-            padding: 2rem;
-            flex: 1;
+        .header-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: var(--white);
         }
         
-        h1 {
-            color: var(--primary-dark);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 1.8rem;
+        .header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
         }
         
+        .header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Navbar */
         .navbar {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: auto auto;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--blue);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .nav-item {
-            background-color: white;
-            padding: 1rem;
-            border-radius: 8px;
+            padding: 15px 0;
             text-align: center;
+            color: var(--white);
+            flex: 1;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border: 2px solid transparent;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
         }
         
         .nav-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            border-color: var(--primary-dark);
-            color: var(--primary-dark);
+            background-color: var(--blue-dark);
         }
         
-        .nav-item i {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+        .nav-item.active {
+            border-bottom: 3px solid var(--yellow);
+            background-color: var(--blue-dark);
+        }
+        
+        /* Content */
+        .content {
+            padding: 20px;
+            min-height: calc(100vh - 250px);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .content.active {
             display: block;
         }
         
-        footer {
-            background-color: var(--primary-dark);
-            color: white;
-            padding: 1rem;
-            text-align: center;
+        h2 {
+            color: var(--blue-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--yellow);
         }
         
-        .admin-btn {
-            background-color: white;
-            color: var(--primary-dark);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        
-        .admin-btn:hover {
-            background-color: #f0f0f0;
-            transform: scale(1.05);
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
+        /* Table */
+        table {
             width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 2rem;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background-color: var(--white);
             border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
+            overflow: hidden;
         }
         
-        .close-btn {
-            float: right;
-            cursor: pointer;
-            font-size: 1.5rem;
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #eee;
         }
         
-        @media (max-width: 768px) {
-            .navbar {
-                grid-template-columns: 1fr;
-            }
-            
-            h1 {
-                font-size: 1.5rem;
-            }
+        th {
+            background-color: var(--blue-dark);
+            color: var(--white);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        tr:hover {
+            background-color: var(--blue-light);
+        }
+        
+        td {
+            font-weight: 500;
+        }
+        
+        /* Images */
+        .responsive-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .back-btn {
-            background-color: var(--primary-dark);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 1rem;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                height: 100px;
+            }
+            
+            .nav-item {
+                padding: 12px 0;
+                font-size: 0.9rem;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            th, td {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+
+            .responsive-img {
+                border-radius: 4px;
+                margin: 10px auto;
+            }
         }
         
-        .back-btn:hover {
-            opacity: 0.9;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <header>
-        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/dd237e77-81de-4234-8674-0dda7aae605c.png" alt="Gunung Batur dengan latar panorama pemandangan alam Bali yang indah, awan putih, dan sinar matahari keemasan" class="header-image">
-    </header>
+    <div class="header">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ddbb4148-97d5-4462-bd70-eed1bf92ae2c.png" alt="PJ Batur" />
+    </div>
     
-    <main>
-        <h1>Monitoring Pekerjaan</h1>
-        
-        <div class="navbar">
-            <!-- Baris pertama -->
-            <div class="nav-item">
-                <i>🏙️</i>
-                <span>Urban</span>
-            </div>
-            <div class="nav-item">
-                <i>🚔</i>
-                <span>Patroli</span>
-            </div>
-            
-            <!-- Baris kedua -->
-            <div class="nav-item">
-                <i>👷</i>
-                <span>Mandorline</span>
-            </div>
-            <div class="nav-item">
-                <i>🧯</i>
-                <span>Pemadaman</span>
-            </div>
-        </div>
-        
-        <div class="content">
-            <!-- Konten akan dimuat sesuai pilihan navbar -->
-            <p>Silakan pilih menu di atas untuk melihat detail monitoring pekerjaan.</p>
-        </div>
-    </main>
+    <div class="navbar">
+        <div class="nav-item" onclick="showContent('urban')">Urban</div>
+        <div class="nav-item active" onclick="showContent('patroli')">Patroli</div>
+        <div class="nav-item" onclick="showContent('mandorline')">Mandorline</div>
+        <div class="nav-item" onclick="showContent('pemadaman')">Pemadaman</div>
+    </div>
     
-    <footer>
-        <button class="admin-btn" id="adminBtn">Login Admin</button>
-    </footer>
+    <!-- Urban Content -->
+    <div id="urban" class="content">
+        <h2>Data Urban</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Lokasi</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                    <th>Petugas</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
     
-    <!-- Modal Admin -->
-    <div id="adminModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModal">&times;</span>
-            <h2>Login Admin</h2>
-            <form id="adminForm">
-                <div style="margin-bottom: 1rem;">
-                    <label for="username" style="display: block; margin-bottom: 0.5rem;">Username</label>
-                    <input type="text" id="username" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" required>
-                </div>
-                <div style="margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <label for="password" style="display: block;">Password</label>
-                        <button type="button" id="togglePassword" style="background: none; border: none; color: var(--primary-dark); cursor: pointer; font-size: 0.8rem;">Lihat Password</button>
-                    </div>
-                    <input type="password" id="password" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" required>
-                </div>
-                <button type="submit" style="background-color: var(--primary-dark); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Login</button>
-            </form>
-            <div id="crudPanel" style="margin-top: 2rem; display: none;">
-                <h3>Admin Panel</h3>
-                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-                    <button id="createBtn" style="background-color: #4CAF50; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Create</button>
-                    <button id="readBtn" style="background-color: #2196F3; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Read</button>
-                    <button id="updateBtn" style="background-color: #FFC107; color: black; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Update</button>
-                    <button id="deleteBtn" style="background-color: #F44336; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Delete</button>
-                </div>
-                <div id="crudResult" style="padding: 1rem; background-color: #f9f9f9; border-radius: 4px;"></div>
-            </div>
+    <!-- Patroli Content -->
+    <div id="patroli" class="content active">
+        <h2>Data Patroli</h2>
+        <div class="patroli-image">
+            <img src="patroli.jpg" alt="Tim patroli sedang berjalan menyusuri jalan" class="responsive-img">
         </div>
     </div>
     
+    <!-- Mandorline Content -->
+    <div id="mandorline" class="content">
+        <h2>Data Mandorline</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Area</th>
+                    <th>Tugas</th>
+                    <th>Progress</th>
+                    <th>Mandor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Zona 1</td>
+                    <td>Pemeliharaan Jalan</td>
+                    <td>75%</td>
+                    <td>Budi</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Zona 2</td>
+                    <td>Pembersihan Saluran</td>
+                    <td>50%</td>
+                    <td>Anto</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Zona 3</td>
+                    <td>Pengecatan Marka</td>
+                    <td>25%</td>
+                    <td>Doni</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Pemadaman Content -->
+    <div id="pemadaman" class="content">
+        <h2>Data Pemadaman</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Lokasi</th>
+                    <th>Waktu</th>
+                    <th>Durasi</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Jl. Merdeka</td>
+                    <td>2023-06-15 09:00</td>
+                    <td>2 jam</td>
+                    <td>Selesai</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jl. Sudirman</td>
+                    <td>2023-06-16 14:00</td>
+                    <td>3 jam</td>
+                    <td>Dalam Proses</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Jl. Gatot Subroto</td>
+                    <td>2023-06-17 10:00</td>
+                    <td>1 jam</td>
+                    <td>Dijadwalkan</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
     <script>
-        // Admin Database Setup
-        let tasksDB = {
-            'Urban': [],
-            'Patroli': [],
-            'Mandorline': [],
-            'Pemadaman': []
-        };
+        function loadCSV(file, tableId) {
+            fetch(file)
+                .then(response => response.text())
+                .then(data => {
+                    const rows = data.split('\n');
+                    const table = document.querySelector(`#${tableId} table tbody`);
+                    table.innerHTML = '';
+                    
+                    rows.forEach((row, i) => {
+                        // Skip header row and empty rows
+                        if (i > 0 && row.trim() !== '') {
+                            const cols = row.split(',');
+                            const tr = document.createElement('tr');
+                            cols.forEach((col, colIndex) => {
+                                const td = document.createElement('td');
+                                td.textContent = col;
+                                // Add empty style attribute to match the header styling
+                                if (colIndex > 0) {
+                                    td.setAttribute('style', '');
+                                }
+                                tr.appendChild(td);
+                            });
+                            table.appendChild(tr);
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading CSV:', error);
+                });
+        }
 
-        // Password visibility toggle
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('password');
-        
-        togglePassword.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.textContent = type === 'password' ? 'Lihat Password' : 'Sembunyikan';
-        });
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load initial data
+            loadCSV('urban.csv', 'urban');
+            loadCSV('mandorline.csv', 'mandorline');
+            loadCSV('pemadaman.csv', 'pemadaman');
 
-        // Modal admin
-        const adminBtn = document.getElementById('adminBtn');
-        const adminModal = document.getElementById('adminModal');
-        const closeModal = document.getElementById('closeModal');
-        const adminForm = document.getElementById('adminForm');
-        const crudPanel = document.getElementById('crudPanel');
-        
-        adminBtn.addEventListener('click', () => {
-            adminModal.style.display = 'block';
-        });
-        
-        closeModal.addEventListener('click', () => {
-            adminModal.style.display = 'none';
-            crudPanel.style.display = 'none';
-            adminForm.reset();
-        });
-        
-        adminForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // Validasi login
-            if (username === 'batur' && password === '123456') {
-                crudPanel.style.display = 'block';
-                // Show data immediately after login
-                document.getElementById('crudResult').innerHTML = `
-                    <h4>Daftar Pekerjaan</h4>
-                    <ul style="list-style-type: none; padding: 0;">
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
-                            <strong>Urban</strong>: Pemeliharaan jalan di area perkotaan
-                        </li>
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
-                            <strong>Patroli</strong>: Ronda malam hari di kompleks perumahan
-                        </li>
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
-                            <strong>Mandorline</strong>: Pengawasan proyek pembangunan jalan
-                        </li>
-                        <li style="padding: 0.5rem 0;">
-                            <strong>Pemadaman</strong>: Penanganan kebakaran hutan di area rawan
-                        </li>
-                    </ul>
-                `;
-            } else {
-                document.getElementById('crudResult').textContent = 'Username atau password salah!';
-                crudPanel.style.display = 'none';
+            function showContent(contentId) {
+                // Hide all content
+                document.querySelectorAll('.content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show selected content
+                document.getElementById(contentId).classList.add('active');
+                
+                // Update active nav item
+                document.querySelectorAll('.nav-item').forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                event.target.classList.add('active');
+                
+                // Keep header visible for all content
+                document.querySelector('.header').style.height = '120px';
             }
-        });
-        
-        // Fungsi CRUD
-        document.getElementById('createBtn').addEventListener('click', () => {
-            document.getElementById('crudResult').innerHTML = `
-                <h4>Create New Data</h4>
-                <form id="createForm">
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem;">Judul</label>
-                        <input type="text" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" required>
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem;">Deskripsi</label>
-                        <textarea style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; min-height: 100px;" required></textarea>
-                    </div>
-                    <button type="submit" style="background-color: #4CAF50; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Simpan</button>
-                </form>
-            `;
-            
-            document.getElementById('createForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Data berhasil dibuat!');
-            });
-        });
-        
-        document.getElementById('readBtn').addEventListener('click', () => {
-            // Same data format as shown after login
-            document.getElementById('crudResult').innerHTML = `
-                <h4>Daftar Pekerjaan</h4>
-                <ul style="list-style-type: none; padding: 0;">
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
-                        <strong>Urban</strong>: Pemeliharaan jalan di area perkotaan
-                    </li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
-                        <strong>Patroli</strong>: Ronda malam hari di kompleks perumahan
-                    </li>
-                    <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
-                        <strong>Mandorline</strong>: Pengawasan proyek pembangunan jalan
-                    </li>
-                    <li style="padding: 0.5rem 0;">
-                        <strong>Pemadaman</strong>: Penanganan kebakaran hutan di area rawan
-                    </li>
-                </ul>
-            `;
-        });
-        
-        document.getElementById('updateBtn').addEventListener('click', () => {
-            document.getElementById('crudResult').innerHTML = `
-                <h4>Update Data</h4>
-                <form id="updateForm">
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem;">Pilih Data</label>
-                        <select style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
-                            <option>Urban</option>
-                            <option>Patroli</option>
-                            <option>Mandorline</option>
-                            <option>Pemadaman</option>
-                        </select>
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem;">Perubahan</label>
-                        <textarea style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; min-height: 100px;" required></textarea>
-                    </div>
-                    <button type="submit" style="background-color: #FFC107; color: black; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Update</button>
-                </form>
-            `;
-            
-            document.getElementById('updateForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Data berhasil diupdate!');
-            });
-        });
-        
-        document.getElementById('deleteBtn').addEventListener('click', () => {
-            document.getElementById('crudResult').innerHTML = `
-                <h4>Hapus Data</h4>
-                <form id="deleteForm">
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem;">Pilih Data yang Akan Dihapus</label>
-                        <select style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
-                            <option>Urban</option>
-                            <option>Patroli</option>
-                            <option>Mandorline</option>
-                            <option>Pemadaman</option>
-                        </select>
-                    </div>
-                    <button type="submit" style="background-color: #F44336; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Hapus</button>
-                </form>
-            `;
-            
-            document.getElementById('deleteForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const confirmed = confirm('Apakah Anda yakin ingin menghapus data ini?');
-                if (confirmed) {
-                    alert('Data berhasil dihapus!');
-                }
-            });
-        });
-        
-        // Fungsi navbar
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const title = this.querySelector('span').textContent;
-                let pageContent = '';
-                
-                if (title === 'Patroli') {
-                    pageContent = `
-                        <div style="text-align: center; padding: 2rem;">
-                            <img src="patroli.jpg" alt="Gambar Patroli" style="max-width: 100%; height: auto; border-radius: 8px;">
-                            <div style="margin-top: 1rem;">
-                                <button onclick="window.history.back()" style="background-color: var(--primary-dark); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Kembali</button>
-                            </div>
-                        </div>
-                    `;
-                } else if (title === 'Pemadaman') {
-                    pageContent = `
-                        <div style="padding: 2rem;">
-                            <h2 style="color: var(--primary-dark);">Data Pemadaman</h2>
-                            <div id="csvTable" style="margin-top: 1rem;"></div>
-                            <div style="margin-top: 1rem;">
-                                <button onclick="window.history.back()" style="background-color: var(--primary-dark); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Kembali</button>
-                            </div>
-                        </div>
-                        <script>
-                            // Load and display CSV data here
-                            fetch('pemadaman.csv')
-                                .then(response => response.text())
-                                .then(data => {
-                                    const table = document.createElement('table');
-                                    // Parse CSV and create table rows
-                                    // Add table to csvTable div
-                                });
-                        </script>
-                    `;
-                } else {
-                    const filename = `${title.toLowerCase()}.csv`;
-                    window.open(`data-table.html?file=${filename}&title=${encodeURIComponent(title)}`, '_blank');
-                    return;
-                }
-                
-                const newWindow = window.open('', '_blank');
-                newWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <title>${title}</title>
-                        <style>
-                            body {
-                                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                                margin: 0;
-                                padding: 0;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        ${pageContent}
-                    </body>
-                    </html>
-                `);
-                newWindow.document.close();
-            });
+
+            window.showContent = showContent;
         });
     </script>
 </body>
