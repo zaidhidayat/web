@@ -50,11 +50,11 @@
     font-weight: 400;
     opacity: 0.8;
   }
-  /* Hamburger */
+  /* Hamburger menu */
   .hamburger {
+    cursor: pointer;
     width: 30px;
     height: 22px;
-    cursor: pointer;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -65,32 +65,21 @@
     height: 4px;
     background: white;
     border-radius: 2px;
-    transition: 0.3s;
   }
-  .hamburger.active span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-  }
-  .hamburger.active span:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger.active span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
-  }
-  /* Sidebar menu */
   nav {
     position: fixed;
     top: 70px;
     right: -250px;
     width: 250px;
     height: calc(100% - 70px);
-    background: linear-gradient(180deg, #003366, #d4af37);
+    background: #003366cc;
     color: white;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.3);
     transition: right 0.3s ease;
-    z-index: 999;
     padding-top: 1rem;
+    z-index: 999;
+    overflow-y: auto;
   }
-  nav.active {
+  nav.open {
     right: 0;
   }
   nav ul {
@@ -98,24 +87,24 @@
     padding: 0;
     margin: 0;
   }
-  nav ul li {
+  nav li {
     padding: 1rem 1.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
+    border-bottom: 1px solid #d4af37;
     cursor: pointer;
     font-weight: 600;
     font-size: 1.1rem;
   }
-  nav ul li:hover {
-    background: rgba(255,255,255,0.15);
+  nav li:hover {
+    background: #d4af37;
+    color: #003366;
   }
-  /* Main content */
   main {
     margin-top: 70px;
     padding: 1rem 1.5rem;
     max-width: 100%;
     min-height: calc(100vh - 70px);
     background: white;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
   }
   /* Images */
   main img {
@@ -124,7 +113,7 @@
     display: block;
     margin: 0 auto;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 0 10px #d4af37aa;
   }
   /* Tables */
   table {
@@ -136,13 +125,17 @@
   th, td {
     border: 1px solid #003366;
     padding: 0.5rem 0.75rem;
+    text-align: left;
   }
   th {
     background: linear-gradient(90deg, #003366, #d4af37);
     color: white;
-    font-weight: 700;
   }
-  td:nth-child(3), td:nth-child(4) {
+  /* Special center alignment for col 3 & 4 in Urban */
+  .urban-table td:nth-child(3),
+  .urban-table td:nth-child(4),
+  .urban-table th:nth-child(3),
+  .urban-table th:nth-child(4) {
     text-align: center;
   }
   /* Buttons */
@@ -150,72 +143,98 @@
     background: linear-gradient(90deg, #003366, #d4af37);
     border: none;
     color: white;
-    padding: 0.6rem 1.2rem;
+    padding: 0.7rem 1.5rem;
     font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
     font-weight: 600;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #d4af37aa;
     transition: background 0.3s ease;
+    margin: 1rem auto;
+    display: block;
   }
   button:hover {
     background: linear-gradient(90deg, #d4af37, #003366);
   }
-  /* Form inputs */
-  input[type="text"], input[type="file"] {
+  /* CT Dengan Gambar */
+  #ct-gambar-container {
+    text-align: center;
+  }
+  #ct-gambar-container img {
+    max-width: 300px;
+    margin-top: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #003366aa;
+  }
+  #ct-gambar-container pre {
+    background: #f0f0f0;
+    border-radius: 6px;
     padding: 0.5rem;
+    margin: 0.5rem auto;
+    max-width: 90%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-shadow: inset 0 0 5px #d4af37aa;
+  }
+  /* CT Manual */
+  #ct-manual-form {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  #ct-manual-form input {
+    padding: 0.5rem 0.75rem;
     font-size: 1rem;
     border: 1px solid #003366;
-    border-radius: 5px;
-    width: 100%;
-    margin-bottom: 1rem;
+    border-radius: 6px;
   }
-  /* Text area preview */
-  #previewText {
-    white-space: pre-wrap;
-    background: #f9f9f9;
-    border: 1px solid #d4af37;
-    padding: 0.75rem;
-    border-radius: 5px;
-    margin-top: 0.5rem;
-    font-family: monospace;
-    color: #003366;
+  /* K3 text */
+  #k3-text {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 600;
   }
-  /* Scroll for main */
-  main {
-    overflow-y: auto;
+  /* Scrollbar for nav */
+  nav::-webkit-scrollbar {
+    width: 8px;
+  }
+  nav::-webkit-scrollbar-thumb {
+    background: #d4af37;
+    border-radius: 4px;
   }
 </style>
 </head>
 <body>
-<div id="app">
-  <header>
-    <div class="titles">
-      <h1 id="page-title">Patroli ROW</h1>
-      <h2>PJ BATUR</h2>
-    </div>
-    <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
-      <span></span><span></span><span></span>
-    </div>
-  </header>
-  <nav id="nav-menu" aria-label="Main menu">
-    <ul>
-      <li data-page="patroli">Patroli ROW</li>
-      <li data-page="jadwal">Jadwal Piket</li>
-      <li data-page="urban">Urban</li>
-      <li data-page="mandorline">Mandorline</li>
-      <li data-page="pemadaman">Pemadaman</li>
-      <li data-page="kct">KCT</li>
-      <li data-page="vkrn">VKRN</li>
-      <li data-page="ctgambar">CT Dengan Gambar</li>
-      <li data-page="ctmanual">CT Manual</li>
-      <li data-page="k3">K3</li>
-    </ul>
-  </nav>
-  <main id="content" tabindex="0">
-    <!-- Content loaded by JS -->
-  </main>
-</div>
+<header>
+  <div class="titles">
+    <h1 id="page-title">Patroli ROW</h1>
+    <h2>PJ BATUR</h2>
+  </div>
+  <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+<nav id="nav-menu" aria-label="Main menu">
+  <ul>
+    <li data-page="patroli">Patroli ROW</li>
+    <li data-page="jadwal">Jadwal Piket</li>
+    <li data-page="urban">Urban</li>
+    <li data-page="mandorline">Mandorline</li>
+    <li data-page="pemadaman">Pemadaman</li>
+    <li data-page="kct">KCT</li>
+    <li data-page="vkrn">VKRN</li>
+    <li data-page="ct-gambar">CT Dengan Gambar</li>
+    <li data-page="ct-manual">CT Manual</li>
+    <li data-page="k3">K3</li>
+  </ul>
+</nav>
+<main id="main-content" role="main" aria-live="polite" aria-atomic="true" tabindex="0">
+  <!-- Content loaded by JS -->
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
 <script>
@@ -236,21 +255,21 @@
       title: "Urban",
       content: async () => {
         const data = await fetchCSV('urban.csv');
-        return createTable(data, [2,3]);
+        return renderTable(data, true);
       }
     },
     mandorline: {
       title: "Mandorline",
       content: async () => {
         const data = await fetchCSV('mandorline.csv');
-        return createTable(data);
+        return renderTable(data, false);
       }
     },
     pemadaman: {
       title: "Pemadaman",
       content: async () => {
         const data = await fetchCSV('pemadaman.csv');
-        return createTable(data);
+        return renderTable(data, false);
       }
     },
     kct: {
@@ -265,26 +284,29 @@
         return `<button id="btn-vkrn" type="button">Buka VKRN</button>`;
       }
     },
-    ctgambar: {
+    "ct-gambar": {
       title: "CT Dengan Gambar",
       content: () => {
         return `
-          <input type="file" id="uploadImage" accept="image/*" />
-          <div id="imagePreview" style="margin-top:1rem;"></div>
-          <div id="previewText" aria-live="polite"></div>
-          <button id="sendWhatsapp" style="display:none;">Send WhatsApp</button>
+          <div id="ct-gambar-container">
+            <input type="file" id="upload-image" accept="image/*" />
+            <button id="btn-send-whatsapp" disabled>Send WhatsApp</button>
+            <pre id="ocr-process"></pre>
+            <pre id="search-result"></pre>
+            <img id="preview-image" alt="Preview" />
+          </div>
         `;
       }
     },
-    ctmanual: {
+    "ct-manual": {
       title: "CT Manual",
       content: () => {
         return `
-          <label for="nomerMeter">Nomer Meter</label>
-          <input type="text" id="nomerMeter" autocomplete="off" />
-          <label for="nomerG">Nomer G</label>
-          <input type="text" id="nomerG" autocomplete="off" />
-          <button id="sendWhatsappManual">Send WhatsApp</button>
+          <form id="ct-manual-form" onsubmit="return false;">
+            <input type="text" id="input-meter" placeholder="Nomor Meter" required />
+            <input type="text" id="input-g" placeholder="Nomor G" required />
+            <button id="btn-send-whatsapp-manual" type="button">Send WhatsApp</button>
+          </form>
         `;
       }
     },
@@ -292,28 +314,20 @@
       title: "K3",
       content: () => {
         return `
-Melakukan Safety Briefing sebelum memulai pekerjaan
-
-Melakukan pekerjaan berdasar dokumen Working Permit
-
-Membuat dan memahami identifikasi bahaya, pengendalian resiko dan JSA pada setiap pekerjaan
-
-Memahami dan melakukan pekerjaan sesuai dengan langkah dan tahapan SOP
-
-Memahami dan melakukan alat pelindung diri sesuai SOP
-
-Bekerja menggunakan alat kerja sesuai SOP
-
-Melakukan cek tegangan menggunakan volt detector
-
-Melakukan pemasangan grounding pada kedua sisi sesuai SOP
-
-Memasang Rambu atau Lotto pada saat melaksanakan pekerjaan
-
-Saling mengingatkan rekan kerja yang berada pada kondisi berbahaya saat bekerja
-
-Tidak melanjutkan pekerjaan apabila tidak ada pengawas, working permit/work order SOP, JSA, APD dan Alat Kerja.
-        `.replace(/\n/g, '<br>');
+          <div id="k3-text">
+            <p>Melakukan Safety Briefing sebelum memulai pekerjaan</p>
+            <p>Melakukan pekerjaan berdasar dokumen Working Permit</p>
+            <p>Membuat dan memahami identifikasi bahaya, pengendalian resiko dan JSA pada setiap pekerjaan</p>
+            <p>Memahami dan melakukan pekerjaan sesuai dengan langkah dan tahapan SOP</p>
+            <p>Memahami dan melakukan alat pelindung diri sesuai SOP</p>
+            <p>Bekerja menggunakan alat kerja sesuai SOP</p>
+            <p>Melakukan cek tegangan menggunakan volt detector</p>
+            <p>Melakukan pemasangan grounding pada kedua sisi sesuai SOP</p>
+            <p>Memasang Rambu atau Lotto pada saat melaksanakan pekerjaan</p>
+            <p>Saling mengingatkan rekan kerja yang berada pada kondisi berbahaya saat bekerja</p>
+            <p>Tidak melanjutkan pekerjaan apabila tidak ada pengawas, working permit/work order SOP, JSA, APD dan Alat Kerja</p>
+          </div>
+        `;
       }
     }
   };
@@ -322,124 +336,50 @@ Tidak melanjutkan pekerjaan apabila tidak ada pengawas, working permit/work orde
   const hamburger = document.getElementById('hamburger');
   const navMenu = document.getElementById('nav-menu');
   hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
+    navMenu.classList.toggle('open');
   });
   hamburger.addEventListener('keydown', e => {
     if(e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      hamburger.click();
+      navMenu.classList.toggle('open');
     }
   });
 
+  // Navigation click
+  navMenu.querySelectorAll('li').forEach(li => {
+    li.addEventListener('click', async () => {
+      navMenu.classList.remove('open');
+      await loadPage(li.dataset.page);
+    });
+  });
+
   // Load page content
-  const content = document.getElementById('content');
-  const pageTitle = document.getElementById('page-title');
-
   async function loadPage(pageKey) {
-    if (!pages[pageKey]) return;
-    pageTitle.textContent = pages[pageKey].title;
-    content.innerHTML = 'Loading...';
-    if (typeof pages[pageKey].content === 'function') {
-      const result = pages[pageKey].content();
-      if (result instanceof Promise) {
-        content.innerHTML = await result;
-      } else {
-        content.innerHTML = result;
-      }
-    } else {
-      content.innerHTML = pages[pageKey].content;
+    const page = pages[pageKey];
+    if (!page) return;
+    document.getElementById('page-title').textContent = page.title;
+    const main = document.getElementById('main-content');
+    main.innerHTML = 'Loading...';
+    let content = page.content();
+    if (content instanceof Promise) {
+      content = await content;
     }
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-    attachPageEvents(pageKey);
-  }
-
-  // Attach events for specific pages
-  function attachPageEvents(pageKey) {
-    if (pageKey === 'kct') {
+    main.innerHTML = content;
+    if(pageKey === 'kct') {
       document.getElementById('btn-kct').onclick = () => {
         window.open('https://pdpjpwt.my.id/', '_blank');
       };
     }
-    if (pageKey === 'vkrn') {
+    if(pageKey === 'vkrn') {
       document.getElementById('btn-vkrn').onclick = () => {
         window.open('https://tewbo.my.id/', '_blank');
       };
     }
-    if (pageKey === 'ctgambar') {
-      const uploadImage = document.getElementById('uploadImage');
-      const imagePreview = document.getElementById('imagePreview');
-      const previewText = document.getElementById('previewText');
-      const sendWhatsapp = document.getElementById('sendWhatsapp');
-      let nomerMeter = '';
-      let nomerG = '';
-
-      sendWhatsapp.style.display = 'none';
-      previewText.textContent = '';
-      imagePreview.innerHTML = '';
-
-      uploadImage.onchange = async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const url = URL.createObjectURL(file);
-        imagePreview.innerHTML = `<img src="${url}" alt="Uploaded Image" style="max-width:100%;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,0.15);" />`;
-        previewText.textContent = 'Memproses OCR...';
-        sendWhatsapp.style.display = 'none';
-
-        try {
-          const { data: { text } } = await Tesseract.recognize(file, 'ind');
-          // Cari nomer meter (angka berawalan 52205)
-          const meterMatch = text.match(/52205\d*/g);
-          nomerMeter = meterMatch ? meterMatch[0] : '';
-          // Cari nomer g (huruf G diikuti angka)
-          const gMatch = text.match(/G\d+/gi);
-          nomerG = gMatch ? gMatch[0] : '';
-
-          if (!nomerMeter || !nomerG) {
-            previewText.textContent = 'Nomor meter atau nomor gangguan tidak ditemukan dalam gambar.';
-            sendWhatsapp.style.display = 'none';
-            return;
-          }
-
-          const whatsappText = 
-`FORMAT PERMINTAAN CLEAR TEMPER
-
-ID Pelanggan/Nomor Meter : ${nomerMeter}
-Nomor gangguan/PK : ${nomerG}
-Keterangan: kwh meter periksa.`;
-
-          previewText.textContent = whatsappText;
-          sendWhatsapp.style.display = 'inline-block';
-
-          sendWhatsapp.onclick = () => {
-            const url = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
-            window.open(url, '_blank');
-          };
-        } catch (err) {
-          previewText.textContent = 'Gagal memproses OCR. Coba lagi.';
-          sendWhatsapp.style.display = 'none';
-        }
-      };
+    if(pageKey === 'ct-gambar') {
+      setupCTGambar();
     }
-    if (pageKey === 'ctmanual') {
-      const btnSend = document.getElementById('sendWhatsappManual');
-      btnSend.onclick = () => {
-        const nomerMeter = document.getElementById('nomerMeter').value.trim();
-        const nomerG = document.getElementById('nomerG').value.trim();
-        if (!nomerMeter || !nomerG) {
-          alert('Mohon isi nomer meter dan nomer g dengan benar.');
-          return;
-        }
-        const whatsappText = 
-`FORMAT PERMINTAAN CLEAR TEMPER
-
-ID Pelanggan/Nomor Meter : ${nomerMeter}
-Nomor gangguan/PK : ${nomerG}
-Keterangan: kwh meter periksa.`;
-        const url = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
-        window.open(url, '_blank');
-      };
+    if(pageKey === 'ct-manual') {
+      setupCTManual();
     }
   }
 
@@ -447,59 +387,110 @@ Keterangan: kwh meter periksa.`;
   async function fetchCSV(filename) {
     try {
       const res = await fetch(filename);
-      if (!res.ok) throw new Error('File not found');
+      if(!res.ok) throw new Error('File not found');
       const text = await res.text();
       return parseCSV(text);
-    } catch (e) {
-      return [['Error loading file']];
+    } catch(e) {
+      return [["Error loading file"]];
     }
   }
 
-  // Simple CSV parser
+  // Parse CSV text to array of arrays
   function parseCSV(text) {
     const lines = text.trim().split('\n');
     return lines.map(line => {
-      // Split by comma, handle quoted commas
-      const regex = /(".*?"|[^",\s]+)(?=\s*,|\s*$)/g;
-      const matches = [];
-      let match;
-      while ((match = regex.exec(line)) !== null) {
-        let val = match[1];
-        if (val.startsWith('"') && val.endsWith('"')) {
-          val = val.slice(1, -1).replace(/""/g, '"');
-        }
-        matches.push(val);
-      }
-      return matches;
+      // Split by comma, trim spaces, handle quoted commas if needed
+      // Simple split for now
+      return line.split(',').map(cell => cell.trim());
     });
   }
 
-  // Create table from array data, centerCols is array of zero-based column indexes to center
-  function createTable(data, centerCols = []) {
-    if (!data || !data.length) return '<p>Tidak ada data.</p>';
-    let html = '<table><thead><tr>';
-    data[0].forEach(h => {
-      html += `<th>${h}</th>`;
+  // Render table from array data, with special center alignment for urban col 3 & 4
+  function renderTable(data, isUrban) {
+    if(!data || data.length === 0) return '<p>Tidak ada data</p>';
+    let tableClass = isUrban ? 'urban-table' : '';
+    let html = `<table class="${tableClass}"><thead><tr>`;
+    data[0].forEach(head => {
+      html += `<th>${head}</th>`;
     });
-    html += '</tr></thead><tbody>';
-    for (let i=1; i<data.length; i++) {
-      html += '<tr>';
-      data[i].forEach((cell, idx) => {
-        const align = centerCols.includes(idx) ? ' style="text-align:center;"' : '';
-        html += `<td${align}>${cell}</td>`;
+    html += `</tr></thead><tbody>`;
+    for(let i=1; i<data.length; i++) {
+      html += `<tr>`;
+      data[i].forEach(cell => {
+        html += `<td>${cell}</td>`;
       });
-      html += '</tr>';
+      html += `</tr>`;
     }
-    html += '</tbody></table>';
+    html += `</tbody></table>`;
     return html;
   }
 
-  // Navigation click
-  document.querySelectorAll('nav ul li').forEach(li => {
-    li.addEventListener('click', () => {
-      loadPage(li.dataset.page);
-    });
-  });
+  // CT Dengan Gambar setup
+  function setupCTGambar() {
+    const uploadInput = document.getElementById('upload-image');
+    const ocrProcess = document.getElementById('ocr-process');
+    const searchResult = document.getElementById('search-result');
+    const previewImage = document.getElementById('preview-image');
+    const btnSend = document.getElementById('btn-send-whatsapp');
+    let nomerMeter = '';
+    let nomerG = '';
+
+    btnSend.disabled = true;
+    btnSend.onclick = () => {
+      if(!nomerMeter || !nomerG) return alert('Nomor meter atau nomor G belum ditemukan.');
+      const message = `FORMAT PERMINTAAN CLEAR TEMPER\n\nID Pelanggan/Nomor Meter : ${nomerMeter}\nNomor gangguan/PK : ${nomerG}\nKeterangan: kwh meter periksa.`;
+      const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    };
+
+    uploadInput.onchange = () => {
+      const file = uploadInput.files[0];
+      if(!file) return;
+      previewImage.src = URL.createObjectURL(file);
+      ocrProcess.textContent = 'Memproses OCR...';
+      searchResult.textContent = '';
+      btnSend.disabled = true;
+      nomerMeter = '';
+      nomerG = '';
+
+      Tesseract.recognize(
+        file,
+        'ind',
+        { logger: m => {
+          ocrProcess.textContent = `OCR Progress: ${Math.round(m.progress * 100)}%`;
+        }}
+      ).then(({ data: { text } }) => {
+        ocrProcess.textContent = 'OCR selesai. Mencari nomor meter dan nomor G...';
+        // Cari nomor meter: angka berawalan 52205 (angka bisa lebih panjang)
+        const meterMatch = text.match(/52205\d*/g);
+        nomerMeter = meterMatch ? meterMatch[0] : '';
+        // Cari nomor G: huruf G diikuti angka
+        const gMatch = text.match(/G\d+/gi);
+        nomerG = gMatch ? gMatch[0] : '';
+        let resultText = `Nomor Meter: ${nomerMeter || 'Tidak ditemukan'}\nNomor G: ${nomerG || 'Tidak ditemukan'}`;
+        searchResult.textContent = resultText;
+        btnSend.disabled = !(nomerMeter && nomerG);
+      }).catch(e => {
+        ocrProcess.textContent = 'OCR gagal: ' + e.message;
+      });
+    };
+  }
+
+  // CT Manual setup
+  function setupCTManual() {
+    const btnSend = document.getElementById('btn-send-whatsapp-manual');
+    btnSend.onclick = () => {
+      const meter = document.getElementById('input-meter').value.trim();
+      const g = document.getElementById('input-g').value.trim();
+      if(!meter || !g) {
+        alert('Mohon isi Nomor Meter dan Nomor G');
+        return;
+      }
+      const message = `FORMAT PERMINTAAN CLEAR TEMPER\n\nID Pelanggan/Nomor Meter : ${meter}\nNomor gangguan/PK : ${g}\nKeterangan: kwh meter periksa.`;
+      const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    };
+  }
 
   // Load default page
   loadPage('patroli');
