@@ -10,35 +10,43 @@
     box-sizing: border-box;
   }
   body, html {
-    margin: 0; padding: 0; height: 100%;
+    margin: 0; padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(90deg, #003366, #ffffff, #d4af37, #003366);
     color: #003366;
+    height: 100vh;
+    overflow-x: hidden;
   }
   #app {
-    max-width: 100vw;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    max-width: 100%;
+    margin: 0 auto;
   }
   header {
-    width: 100%;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 70px;
     background: linear-gradient(90deg, #003366, #d4af37, #003366);
     color: white;
-    padding: 1rem 1.5rem;
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 1rem;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  }
+  header .titles {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
   }
   header h1 {
     margin: 0;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 700;
   }
   header h2 {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 400;
     opacity: 0.8;
   }
@@ -47,171 +55,161 @@
     width: 30px;
     height: 22px;
     cursor: pointer;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
-  .hamburger div {
+  .hamburger span {
+    display: block;
     height: 4px;
     background: white;
     border-radius: 2px;
+    transition: 0.3s;
+  }
+  .hamburger.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
   }
   /* Sidebar menu */
   nav {
     position: fixed;
-    top: 0; right: 0;
-    height: 100vh;
+    top: 70px;
+    right: -250px;
     width: 250px;
-    background: #003366cc;
+    height: calc(100% - 70px);
+    background: linear-gradient(180deg, #003366, #d4af37);
     color: white;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    padding-top: 4rem;
-    z-index: 1000;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 999;
+    padding-top: 1rem;
   }
-  nav.open {
-    transform: translateX(0);
+  nav.active {
+    right: 0;
   }
   nav ul {
     list-style: none;
-    padding: 0 1rem;
+    padding: 0;
     margin: 0;
   }
   nav ul li {
-    margin: 1rem 0;
-  }
-  nav ul li button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.1rem;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
-    padding: 0.5rem 0;
-    font-weight: 600;
-    border-bottom: 1px solid #d4af37;
-    transition: background 0.2s ease;
-  }
-  nav ul li button:hover {
-    background: #d4af37;
-    color: #003366;
-  }
-  main {
-    flex-grow: 1;
-    width: 100%;
-    max-width: 100vw;
-    background: white;
     padding: 1rem 1.5rem;
-    overflow-y: auto;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  nav ul li:hover {
+    background: rgba(255,255,255,0.15);
+  }
+  /* Main content */
+  main {
+    margin-top: 70px;
+    padding: 1rem 1.5rem;
+    max-width: 100%;
+    min-height: calc(100vh - 70px);
+    background: white;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
   }
   /* Images */
-  .page-image {
+  main img {
     max-width: 100%;
     height: auto;
+    display: block;
+    margin: 0 auto;
     border-radius: 8px;
-    box-shadow: 0 0 10px #d4af37aa;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   }
   /* Tables */
   table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
-    box-shadow: 0 0 10px #d4af37aa;
+    font-size: 0.9rem;
   }
   th, td {
     border: 1px solid #003366;
     padding: 0.5rem 0.75rem;
-    font-size: 0.9rem;
   }
   th {
-    background: #d4af37;
-    color: #003366;
+    background: linear-gradient(90deg, #003366, #d4af37);
+    color: white;
     font-weight: 700;
   }
-  td.center {
+  td:nth-child(3), td:nth-child(4) {
     text-align: center;
   }
   /* Buttons */
-  button.action-btn {
-    background: #d4af37;
+  button {
+    background: linear-gradient(90deg, #003366, #d4af37);
     border: none;
-    color: #003366;
-    font-weight: 700;
+    color: white;
     padding: 0.6rem 1.2rem;
-    border-radius: 6px;
-    cursor: pointer;
     font-size: 1rem;
-    box-shadow: 0 0 8px #d4af37aa;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
     transition: background 0.3s ease;
   }
-  button.action-btn:hover {
-    background: #b38f1f;
+  button:hover {
+    background: linear-gradient(90deg, #d4af37, #003366);
   }
   /* Form inputs */
   input[type="text"], input[type="file"] {
     padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid #003366;
-    border-radius: 4px;
+    border-radius: 5px;
     width: 100%;
-    max-width: 300px;
     margin-bottom: 1rem;
   }
-  /* CT Dengan Gambar preview */
-  #ct-image-preview {
-    max-width: 100%;
-    max-height: 300px;
-    margin-top: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #d4af37aa;
-  }
-  #whatsapp-preview {
-    margin-top: 1rem;
+  /* Text area preview */
+  #previewText {
     white-space: pre-wrap;
+    background: #f9f9f9;
+    border: 1px solid #d4af37;
+    padding: 0.75rem;
+    border-radius: 5px;
+    margin-top: 0.5rem;
     font-family: monospace;
-    background: #f0f0f0;
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    max-width: 600px;
+    color: #003366;
   }
-  /* Scrollbar for main */
-  main::-webkit-scrollbar {
-    width: 8px;
-  }
-  main::-webkit-scrollbar-thumb {
-    background: #d4af37;
-    border-radius: 4px;
-  }
-  main::-webkit-scrollbar-track {
-    background: #f0f0f0;
+  /* Scroll for main */
+  main {
+    overflow-y: auto;
   }
 </style>
 </head>
 <body>
 <div id="app">
   <header>
-    <div>
+    <div class="titles">
       <h1 id="page-title">Patroli ROW</h1>
       <h2>PJ BATUR</h2>
     </div>
     <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
-      <div></div><div></div><div></div>
+      <span></span><span></span><span></span>
     </div>
   </header>
-  <nav id="sidebar" aria-label="Main menu">
+  <nav id="nav-menu" aria-label="Main menu">
     <ul>
-      <li><button data-page="patroli">Patroli ROW</button></li>
-      <li><button data-page="jadwal">Jadwal Piket</button></li>
-      <li><button data-page="urban">Urban</button></li>
-      <li><button data-page="mandorline">Mandorline</button></li>
-      <li><button data-page="pemadaman">Pemadaman</button></li>
-      <li><button data-page="kct">KCT</button></li>
-      <li><button data-page="vkrn">VKRN</button></li>
-      <li><button data-page="ctgambar">CT Dengan Gambar</button></li>
-      <li><button data-page="ctmanual">CT Manual</button></li>
-      <li><button data-page="k3">K3</button></li>
+      <li data-page="patroli">Patroli ROW</li>
+      <li data-page="jadwal">Jadwal Piket</li>
+      <li data-page="urban">Urban</li>
+      <li data-page="mandorline">Mandorline</li>
+      <li data-page="pemadaman">Pemadaman</li>
+      <li data-page="kct">KCT</li>
+      <li data-page="vkrn">VKRN</li>
+      <li data-page="ctgambar">CT Dengan Gambar</li>
+      <li data-page="ctmanual">CT Manual</li>
+      <li data-page="k3">K3</li>
     </ul>
   </nav>
   <main id="content" tabindex="0">
@@ -221,144 +219,274 @@
 
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
 <script>
-  const hamburger = document.getElementById('hamburger');
-  const sidebar = document.getElementById('sidebar');
-  const content = document.getElementById('content');
-  const pageTitle = document.getElementById('page-title');
-
-  // Pages content functions
   const pages = {
-    patroli: () => {
-      pageTitle.textContent = 'Patroli ROW';
-      return `<img src="patroli.jpg" alt="Patroli ROW" class="page-image" />`;
+    patroli: {
+      title: "Patroli ROW",
+      content: () => {
+        return `<img src="patroli.jpg" alt="Patroli ROW" />`;
+      }
     },
-    jadwal: () => {
-      pageTitle.textContent = 'Jadwal Piket';
-      return `<img src="jadwal.jpg" alt="Jadwal Piket" class="page-image" />`;
+    jadwal: {
+      title: "Jadwal Piket",
+      content: () => {
+        return `<img src="jadwal.jpg" alt="Jadwal Piket" />`;
+      }
     },
-    urban: async () => {
-      pageTitle.textContent = 'Urban';
-      const data = await fetchCSV('urban.csv');
-      return renderTable(data, [2,3]);
+    urban: {
+      title: "Urban",
+      content: async () => {
+        const data = await fetchCSV('urban.csv');
+        return createTable(data, [2,3]);
+      }
     },
-    mandorline: async () => {
-      pageTitle.textContent = 'Mandorline';
-      const data = await fetchCSV('mandorline.csv');
-      return renderTable(data);
+    mandorline: {
+      title: "Mandorline",
+      content: async () => {
+        const data = await fetchCSV('mandorline.csv');
+        return createTable(data);
+      }
     },
-    pemadaman: async () => {
-      pageTitle.textContent = 'Pemadaman';
-      const data = await fetchCSV('pemadaman.csv');
-      return renderTable(data);
+    pemadaman: {
+      title: "Pemadaman",
+      content: async () => {
+        const data = await fetchCSV('pemadaman.csv');
+        return createTable(data);
+      }
     },
-    kct: () => {
-      pageTitle.textContent = 'KCT';
-      return `<button class="action-btn" id="btn-kct">Buka KCT</button>`;
+    kct: {
+      title: "KCT",
+      content: () => {
+        return `<button id="btn-kct" type="button">Buka KCT</button>`;
+      }
     },
-    vkrn: () => {
-      pageTitle.textContent = 'VKRN';
-      return `<button class="action-btn" id="btn-vkrn">Buka VKRN</button>`;
+    vkrn: {
+      title: "VKRN",
+      content: () => {
+        return `<button id="btn-vkrn" type="button">Buka VKRN</button>`;
+      }
     },
-    ctgambar: () => {
-      pageTitle.textContent = 'CT Dengan Gambar';
-      return `
-        <input type="file" id="upload-image" accept="image/*" />
-        <img id="ct-image-preview" alt="Preview Gambar" style="display:none;" />
-        <div id="whatsapp-preview"></div>
-        <button class="action-btn" id="btn-send-whatsapp" style="display:none;">Send WhatsApp</button>
-      `;
+    ctgambar: {
+      title: "CT Dengan Gambar",
+      content: () => {
+        return `
+          <input type="file" id="uploadImage" accept="image/*" />
+          <div id="imagePreview" style="margin-top:1rem;"></div>
+          <div id="previewText" aria-live="polite"></div>
+          <button id="sendWhatsapp" style="display:none;">Send WhatsApp</button>
+        `;
+      }
     },
-    ctmanual: () => {
-      pageTitle.textContent = 'CT Manual';
-      return `
-        <input type="text" id="input-meter" placeholder="Nomor Meter" />
-        <input type="text" id="input-g" placeholder="Nomor G" />
-        <button class="action-btn" id="btn-send-whatsapp-manual">Send WhatsApp</button>
-      `;
+    ctmanual: {
+      title: "CT Manual",
+      content: () => {
+        return `
+          <label for="nomerMeter">Nomer Meter</label>
+          <input type="text" id="nomerMeter" autocomplete="off" />
+          <label for="nomerG">Nomer G</label>
+          <input type="text" id="nomerG" autocomplete="off" />
+          <button id="sendWhatsappManual">Send WhatsApp</button>
+        `;
+      }
     },
-    k3: () => {
-      pageTitle.textContent = 'K3';
-      return `
-        <p>Melakukan Safety Briefing sebelum memulai pekerjaan</p>
-        <p>Melakukan pekerjaan berdasar dokumen Working Permit</p>
-        <p>Membuat dan memahami identifikasi bahaya, pengendalian resiko dan JSA pada setiap pekerjaan</p>
-        <p>Memahami dan melakukan pekerjaan sesuai dengan langkah dan tahapan SOP</p>
-        <p>Memahami dan melakukan alat pelindung diri sesuai SOP</p>
-        <p>Bekerja menggunakan alat kerja sesuai SOP</p>
-        <p>Melakukan cek tegangan menggunakan volt detector</p>
-        <p>Melakukan pemasangan grounding pada kedua sisi sesuai SOP</p>
-        <p>Memasang Rambu atau Lotto pada saat melaksanakan pekerjaan</p>
-        <p>Saling mengingatkan rekan kerja yang berada pada kondisi berbahaya saat bekerja</p>
-        <p>Tidak melanjutkan pekerjaan apabila tidak ada pengawas, working permit/work order SOP, JSA, APD dan Alat Kerja.</p>
-      `;
+    k3: {
+      title: "K3",
+      content: () => {
+        return `
+Melakukan Safety Briefing sebelum memulai pekerjaan
+
+Melakukan pekerjaan berdasar dokumen Working Permit
+
+Membuat dan memahami identifikasi bahaya, pengendalian resiko dan JSA pada setiap pekerjaan
+
+Memahami dan melakukan pekerjaan sesuai dengan langkah dan tahapan SOP
+
+Memahami dan melakukan alat pelindung diri sesuai SOP
+
+Bekerja menggunakan alat kerja sesuai SOP
+
+Melakukan cek tegangan menggunakan volt detector
+
+Melakukan pemasangan grounding pada kedua sisi sesuai SOP
+
+Memasang Rambu atau Lotto pada saat melaksanakan pekerjaan
+
+Saling mengingatkan rekan kerja yang berada pada kondisi berbahaya saat bekerja
+
+Tidak melanjutkan pekerjaan apabila tidak ada pengawas, working permit/work order SOP, JSA, APD dan Alat Kerja.
+        `.replace(/\n/g, '<br>');
+      }
     }
   };
 
   // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
   hamburger.addEventListener('click', () => {
-    sidebar.classList.toggle('open');
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
   });
-  // Close sidebar on outside click
-  document.addEventListener('click', e => {
-    if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
-      sidebar.classList.remove('open');
+  hamburger.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      hamburger.click();
     }
   });
 
-  // Navigation buttons
-  sidebar.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      sidebar.classList.remove('open');
-      const page = btn.dataset.page;
-      if (pages[page]) {
-        if (page === 'urban' || page === 'mandorline' || page === 'pemadaman') {
-          content.innerHTML = '<p>Loading...</p>';
-          content.innerHTML = await pages[page]();
-        } else {
-          content.innerHTML = pages[page]();
-        }
-        attachPageEvents(page);
-        content.focus();
-      }
-    });
-  });
+  // Load page content
+  const content = document.getElementById('content');
+  const pageTitle = document.getElementById('page-title');
 
-  // Initial load
-  (async () => {
-    content.innerHTML = await pages.patroli();
-  })();
+  async function loadPage(pageKey) {
+    if (!pages[pageKey]) return;
+    pageTitle.textContent = pages[pageKey].title;
+    content.innerHTML = 'Loading...';
+    if (typeof pages[pageKey].content === 'function') {
+      const result = pages[pageKey].content();
+      if (result instanceof Promise) {
+        content.innerHTML = await result;
+      } else {
+        content.innerHTML = result;
+      }
+    } else {
+      content.innerHTML = pages[pageKey].content;
+    }
+    hamburger.classList.remove('active');
+    navMenu.classList.remove('active');
+    attachPageEvents(pageKey);
+  }
+
+  // Attach events for specific pages
+  function attachPageEvents(pageKey) {
+    if (pageKey === 'kct') {
+      document.getElementById('btn-kct').onclick = () => {
+        window.open('https://pdpjpwt.my.id/', '_blank');
+      };
+    }
+    if (pageKey === 'vkrn') {
+      document.getElementById('btn-vkrn').onclick = () => {
+        window.open('https://tewbo.my.id/', '_blank');
+      };
+    }
+    if (pageKey === 'ctgambar') {
+      const uploadImage = document.getElementById('uploadImage');
+      const imagePreview = document.getElementById('imagePreview');
+      const previewText = document.getElementById('previewText');
+      const sendWhatsapp = document.getElementById('sendWhatsapp');
+      let nomerMeter = '';
+      let nomerG = '';
+
+      sendWhatsapp.style.display = 'none';
+      previewText.textContent = '';
+      imagePreview.innerHTML = '';
+
+      uploadImage.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const url = URL.createObjectURL(file);
+        imagePreview.innerHTML = `<img src="${url}" alt="Uploaded Image" style="max-width:100%;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,0.15);" />`;
+        previewText.textContent = 'Memproses OCR...';
+        sendWhatsapp.style.display = 'none';
+
+        try {
+          const { data: { text } } = await Tesseract.recognize(file, 'ind');
+          // Cari nomer meter (angka berawalan 52205)
+          const meterMatch = text.match(/52205\d*/g);
+          nomerMeter = meterMatch ? meterMatch[0] : '';
+          // Cari nomer g (huruf G diikuti angka)
+          const gMatch = text.match(/G\d+/gi);
+          nomerG = gMatch ? gMatch[0] : '';
+
+          if (!nomerMeter || !nomerG) {
+            previewText.textContent = 'Nomor meter atau nomor gangguan tidak ditemukan dalam gambar.';
+            sendWhatsapp.style.display = 'none';
+            return;
+          }
+
+          const whatsappText = 
+`FORMAT PERMINTAAN CLEAR TEMPER
+
+ID Pelanggan/Nomor Meter : ${nomerMeter}
+Nomor gangguan/PK : ${nomerG}
+Keterangan: kwh meter periksa.`;
+
+          previewText.textContent = whatsappText;
+          sendWhatsapp.style.display = 'inline-block';
+
+          sendWhatsapp.onclick = () => {
+            const url = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
+            window.open(url, '_blank');
+          };
+        } catch (err) {
+          previewText.textContent = 'Gagal memproses OCR. Coba lagi.';
+          sendWhatsapp.style.display = 'none';
+        }
+      };
+    }
+    if (pageKey === 'ctmanual') {
+      const btnSend = document.getElementById('sendWhatsappManual');
+      btnSend.onclick = () => {
+        const nomerMeter = document.getElementById('nomerMeter').value.trim();
+        const nomerG = document.getElementById('nomerG').value.trim();
+        if (!nomerMeter || !nomerG) {
+          alert('Mohon isi nomer meter dan nomer g dengan benar.');
+          return;
+        }
+        const whatsappText = 
+`FORMAT PERMINTAAN CLEAR TEMPER
+
+ID Pelanggan/Nomor Meter : ${nomerMeter}
+Nomor gangguan/PK : ${nomerG}
+Keterangan: kwh meter periksa.`;
+        const url = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
+        window.open(url, '_blank');
+      };
+    }
+  }
 
   // Fetch CSV and parse
   async function fetchCSV(filename) {
     try {
       const res = await fetch(filename);
+      if (!res.ok) throw new Error('File not found');
       const text = await res.text();
       return parseCSV(text);
-    } catch {
-      return [];
+    } catch (e) {
+      return [['Error loading file']];
     }
   }
+
   // Simple CSV parser
   function parseCSV(text) {
     const lines = text.trim().split('\n');
     return lines.map(line => {
       // Split by comma, handle quoted commas
       const regex = /(".*?"|[^",\s]+)(?=\s*,|\s*$)/g;
-      const matches = line.match(regex);
-      return matches ? matches.map(s => s.replace(/^"|"$/g, '')) : [];
+      const matches = [];
+      let match;
+      while ((match = regex.exec(line)) !== null) {
+        let val = match[1];
+        if (val.startsWith('"') && val.endsWith('"')) {
+          val = val.slice(1, -1).replace(/""/g, '"');
+        }
+        matches.push(val);
+      }
+      return matches;
     });
   }
-  // Render table with optional center alignment for cols (0-based)
-  function renderTable(data, centerCols=[]) {
-    if (!data.length) return '<p>Tidak ada data.</p>';
+
+  // Create table from array data, centerCols is array of zero-based column indexes to center
+  function createTable(data, centerCols = []) {
+    if (!data || !data.length) return '<p>Tidak ada data.</p>';
     let html = '<table><thead><tr>';
-    data[0].forEach(h => html += `<th>${h}</th>`);
+    data[0].forEach(h => {
+      html += `<th>${h}</th>`;
+    });
     html += '</tr></thead><tbody>';
-    for(let i=1; i<data.length; i++) {
+    for (let i=1; i<data.length; i++) {
       html += '<tr>';
       data[i].forEach((cell, idx) => {
-        const cls = centerCols.includes(idx) ? 'center' : '';
-        html += `<td class="${cls}">${cell}</td>`;
+        const align = centerCols.includes(idx) ? ' style="text-align:center;"' : '';
+        html += `<td${align}>${cell}</td>`;
       });
       html += '</tr>';
     }
@@ -366,71 +494,15 @@
     return html;
   }
 
-  // Attach events for special pages
-  function attachPageEvents(page) {
-    if (page === 'kct') {
-      document.getElementById('btn-kct').onclick = () => {
-        window.open('https://pdpjpwt.my.id/', '_blank');
-      };
-    }
-    if (page === 'vkrn') {
-      document.getElementById('btn-vkrn').onclick = () => {
-        window.open('https://tewbo.my.id/', '_blank');
-      };
-    }
-    if (page === 'ctgambar') {
-      const uploadInput = document.getElementById('upload-image');
-      const imgPreview = document.getElementById('ct-image-preview');
-      const whatsappPreview = document.getElementById('whatsapp-preview');
-      const btnSend = document.getElementById('btn-send-whatsapp');
-      let lastText = '';
-      let nomerMeter = '';
-      let nomerG = '';
+  // Navigation click
+  document.querySelectorAll('nav ul li').forEach(li => {
+    li.addEventListener('click', () => {
+      loadPage(li.dataset.page);
+    });
+  });
 
-      uploadInput.onchange = async e => {
-        whatsappPreview.textContent = '';
-        btnSend.style.display = 'none';
-        const file = e.target.files[0];
-        if (!file) return;
-        const url = URL.createObjectURL(file);
-        imgPreview.src = url;
-        imgPreview.style.display = 'block';
-
-        whatsappPreview.textContent = 'Memproses OCR...';
-        const { data: { text } } = await Tesseract.recognize(file, 'ind', { logger: m => {} });
-        // Cari nomer meter (angka mulai 52205) dan nomer g (G diikuti angka)
-        const meterMatch = text.match(/52205\d*/);
-        const gMatch = text.match(/G\d+/i);
-        nomerMeter = meterMatch ? meterMatch[0] : '';
-        nomerG = gMatch ? gMatch[0].toUpperCase() : '';
-        lastText = `FORMAT PERMINTAAN CLEAR TEMPER\n\nID Pelanggan/Nomor Meter : ${nomerMeter}\nNomor gangguan/PK : ${nomerG}\nKeterangan: kwh meter periksa.`;
-        whatsappPreview.textContent = lastText;
-        if (nomerMeter && nomerG) {
-          btnSend.style.display = 'inline-block';
-        } else {
-          btnSend.style.display = 'none';
-        }
-      };
-      btnSend.onclick = () => {
-        const msg = encodeURIComponent(lastText);
-        window.open(`https://wa.me/?text=${msg}`, '_blank');
-      };
-    }
-    if (page === 'ctmanual') {
-      const btnSendManual = document.getElementById('btn-send-whatsapp-manual');
-      btnSendManual.onclick = () => {
-        const meter = document.getElementById('input-meter').value.trim();
-        const g = document.getElementById('input-g').value.trim();
-        if (!meter || !g) {
-          alert('Mohon isi Nomor Meter dan Nomor G');
-          return;
-        }
-        const msg = `FORMAT PERMINTAAN CLEAR TEMPER\n\nID Pelanggan/Nomor Meter : ${meter}\nNomor gangguan/PK : ${g}\nKeterangan: kwh meter periksa.`;
-        const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
-        window.open(url, '_blank');
-      };
-    }
-  }
+  // Load default page
+  loadPage('patroli');
 </script>
 </body>
 </html>
