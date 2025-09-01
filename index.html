@@ -1,499 +1,559 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PJ BATUR</title>
-<style>
-  /* Reset & base */
-  * {
-    box-sizing: border-box;
-  }
-  body, html {
-    margin: 0; padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(90deg, #003366, #ffffff, #d4af37, #003366);
-    color: #003366;
-    height: 100vh;
-    overflow-x: hidden;
-  }
-  #app {
-    max-width: 100%;
-    margin: 0 auto;
-  }
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: 70px;
-    background: linear-gradient(90deg, #003366, #d4af37, #003366);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1rem;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-  }
-  header .titles {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-  }
-  header h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 700;
-  }
-  header h2 {
-    margin: 0;
-    font-size: 0.8rem;
-    font-weight: 400;
-    opacity: 0.8;
-  }
-  /* Hamburger menu */
-  .hamburger {
-    cursor: pointer;
-    width: 30px;
-    height: 22px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .hamburger span {
-    display: block;
-    height: 4px;
-    background: white;
-    border-radius: 2px;
-  }
-  nav {
-    position: fixed;
-    top: 70px;
-    right: -250px;
-    width: 250px;
-    height: calc(100% - 70px);
-    background: #003366cc;
-    color: white;
-    transition: right 0.3s ease;
-    padding-top: 1rem;
-    z-index: 999;
-    overflow-y: auto;
-  }
-  nav.open {
-    right: 0;
-  }
-  nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  nav li {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #d4af37;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 1.1rem;
-  }
-  nav li:hover {
-    background: #d4af37;
-    color: #003366;
-  }
-  main {
-    margin-top: 70px;
-    padding: 1rem 1.5rem;
-    max-width: 100%;
-    min-height: calc(100vh - 70px);
-    background: white;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-  }
-  /* Images */
-  main img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #d4af37aa;
-  }
-  /* Tables */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-  }
-  th, td {
-    border: 1px solid #003366;
-    padding: 0.5rem 0.75rem;
-    text-align: left;
-  }
-  th {
-    background: linear-gradient(90deg, #003366, #d4af37);
-    color: white;
-  }
-  /* Special center alignment for col 3 & 4 in Urban */
-  .urban-table td:nth-child(3),
-  .urban-table td:nth-child(4),
-  .urban-table th:nth-child(3),
-  .urban-table th:nth-child(4) {
-    text-align: center;
-  }
-  /* Buttons */
-  button {
-    background: linear-gradient(90deg, #003366, #d4af37);
-    border: none;
-    color: white;
-    padding: 0.7rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 25px;
-    cursor: pointer;
-    box-shadow: 0 0 10px #d4af37aa;
-    transition: background 0.3s ease;
-    margin: 1rem auto;
-    display: block;
-  }
-  button:hover {
-    background: linear-gradient(90deg, #d4af37, #003366);
-  }
-  /* CT Dengan Gambar */
-  #ct-gambar-container {
-    text-align: center;
-  }
-  #ct-gambar-container img {
-    max-width: 300px;
-    margin-top: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #003366aa;
-  }
-  #ct-gambar-container pre {
-    background: #f0f0f0;
-    border-radius: 6px;
-    padding: 0.5rem;
-    margin: 0.5rem auto;
-    max-width: 90%;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    box-shadow: inset 0 0 5px #d4af37aa;
-  }
-  /* CT Manual */
-  #ct-manual-form {
-    max-width: 400px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  #ct-manual-form input {
-    padding: 0.5rem 0.75rem;
-    font-size: 1rem;
-    border: 1px solid #003366;
-    border-radius: 6px;
-  }
-  /* K3 text */
-  #k3-text {
-    max-width: 600px;
-    margin: 0 auto;
-    font-size: 1rem;
-    line-height: 1.5;
-    font-weight: 600;
-  }
-  /* Scrollbar for nav */
-  nav::-webkit-scrollbar {
-    width: 8px;
-  }
-  nav::-webkit-scrollbar-thumb {
-    background: #d4af37;
-    border-radius: 4px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PJ BATUR</title>
+    <style>
+        :root {
+            --primary-color: #000;
+            --secondary-color: #fff;
+            --accent-color: #FFD700;
+            --text-color: #fff;
+            --text-color-dark: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color-dark);
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .header-text h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--accent-color);
+        }
+
+        .header-text h2 {
+            font-size: 0.8rem;
+            margin: 0;
+            font-weight: normal;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+        }
+
+        .hamburger-menu {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            transition: right 0.3s ease;
+            z-index: 999;
+            padding-top: 80px;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li a {
+            display: block;
+            padding: 1rem;
+            text-decoration: none;
+            color: var(--secondary-color);
+            transition: background-color 0.2s;
+        }
+
+        .sidebar li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        main {
+            padding-top: 80px;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            max-width: 100%;
+            min-height: calc(100vh - 80px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--text-color-dark);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid var(--primary-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .image-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 1rem auto;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            color: var(--secondary-color);
+            background-color: var(--accent-color);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #b8860b;
+        }
+
+        .centered-content {
+            text-align: center;
+        }
+
+        .form-ct-manual {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border: 1px solid var(--accent-color);
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .form-ct-manual input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--primary-color);
+            font-size: 1rem;
+        }
+
+        .ocr-container {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .upload-button-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .upload-button {
+            font-size: 3rem;
+            color: var(--accent-color);
+        }
+
+        .upload-button-text {
+            display: block;
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-top: 0.5rem;
+        }
+
+        #image-upload {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .ocr-results {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 20px;
+            background-color: var(--accent-color);
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            transition: width 0.3s ease;
+        }
+
+        .k3-list {
+            list-style-type: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .k3-list li {
+            background: #f9f9f9;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-left: 5px solid var(--accent-color);
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+    </style>
+    <script src="https://unpkg.com/tesseract.js@2.1.4/dist/tesseract.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<header>
-  <div class="titles">
-    <h1 id="page-title">Patroli ROW</h1>
-    <h2>PJ BATUR</h2>
-  </div>
-  <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
-    <span></span><span></span><span></span>
-  </div>
-</header>
-<nav id="nav-menu" aria-label="Main menu">
-  <ul>
-    <li data-page="patroli">Patroli ROW</li>
-    <li data-page="jadwal">Jadwal Piket</li>
-    <li data-page="urban">Urban</li>
-    <li data-page="mandorline">Mandorline</li>
-    <li data-page="pemadaman">Pemadaman</li>
-    <li data-page="kct">KCT</li>
-    <li data-page="vkrn">VKRN</li>
-    <li data-page="ct-gambar">CT Dengan Gambar</li>
-    <li data-page="ct-manual">CT Manual</li>
-    <li data-page="k3">K3</li>
-  </ul>
-</nav>
-<main id="main-content" role="main" aria-live="polite" aria-atomic="true" tabindex="0">
-  <!-- Content loaded by JS -->
-</main>
+    <header>
+        <div class="header-content">
+            <div class="header-text">
+                <h1>PJ BATUR</h1>
+                <h2 id="page-title"></h2>
+            </div>
+            <button class="hamburger-menu" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
 
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
-<script>
-  const pages = {
-    patroli: {
-      title: "Patroli ROW",
-      content: () => {
-        return `<img src="patroli.jpg" alt="Patroli ROW" />`;
-      }
-    },
-    jadwal: {
-      title: "Jadwal Piket",
-      content: () => {
-        return `<img src="jadwal.jpg" alt="Jadwal Piket" />`;
-      }
-    },
-    urban: {
-      title: "Urban",
-      content: async () => {
-        const data = await fetchCSV('urban.csv');
-        return renderTable(data, true);
-      }
-    },
-    mandorline: {
-      title: "Mandorline",
-      content: async () => {
-        const data = await fetchCSV('mandorline.csv');
-        return renderTable(data, false);
-      }
-    },
-    pemadaman: {
-      title: "Pemadaman",
-      content: async () => {
-        const data = await fetchCSV('pemadaman.csv');
-        return renderTable(data, false);
-      }
-    },
-    kct: {
-      title: "KCT",
-      content: () => {
-        return `<button id="btn-kct" type="button">Buka KCT</button>`;
-      }
-    },
-    vkrn: {
-      title: "VKRN",
-      content: () => {
-        return `<button id="btn-vkrn" type="button">Buka VKRN</button>`;
-      }
-    },
-    "ct-gambar": {
-      title: "CT Dengan Gambar",
-      content: () => {
-        return `
-          <div id="ct-gambar-container">
-            <input type="file" id="upload-image" accept="image/*" />
-            <button id="btn-send-whatsapp" disabled>Send WhatsApp</button>
-            <pre id="ocr-process"></pre>
-            <pre id="search-result"></pre>
-            <img id="preview-image" alt="Preview" />
-          </div>
-        `;
-      }
-    },
-    "ct-manual": {
-      title: "CT Manual",
-      content: () => {
-        return `
-          <form id="ct-manual-form" onsubmit="return false;">
-            <input type="text" id="input-meter" placeholder="Nomor Meter" required />
-            <input type="text" id="input-g" placeholder="Nomor G" required />
-            <button id="btn-send-whatsapp-manual" type="button">Send WhatsApp</button>
-          </form>
-        `;
-      }
-    },
-    k3: {
-      title: "K3",
-      content: () => {
-        return `
-          <div id="k3-text">
-            <p>Melakukan Safety Briefing sebelum memulai pekerjaan</p>
-            <p>Melakukan pekerjaan berdasar dokumen Working Permit</p>
-            <p>Membuat dan memahami identifikasi bahaya, pengendalian resiko dan JSA pada setiap pekerjaan</p>
-            <p>Memahami dan melakukan pekerjaan sesuai dengan langkah dan tahapan SOP</p>
-            <p>Memahami dan melakukan alat pelindung diri sesuai SOP</p>
-            <p>Bekerja menggunakan alat kerja sesuai SOP</p>
-            <p>Melakukan cek tegangan menggunakan volt detector</p>
-            <p>Melakukan pemasangan grounding pada kedua sisi sesuai SOP</p>
-            <p>Memasang Rambu atau Lotto pada saat melaksanakan pekerjaan</p>
-            <p>Saling mengingatkan rekan kerja yang berada pada kondisi berbahaya saat bekerja</p>
-            <p>Tidak melanjutkan pekerjaan apabila tidak ada pengawas, working permit/work order SOP, JSA, APD dan Alat Kerja</p>
-          </div>
-        `;
-      }
-    }
-  };
+    <nav class="sidebar">
+        <ul>
+            <li><a href="#" data-page="patroli-row">Patroli ROW</a></li>
+            <li><a href="#" data-page="jadwal-piket">Jadwal Piket</a></li>
+            <li><a href="#" data-page="urban">Urban</a></li>
+            <li><a href="#" data-page="mandorline">Mandorline</a></li>
+            <li><a href="#" data-page="pemadaman">Pemadaman</a></li>
+            <li><a href="#" data-page="kct">KCT</a></li>
+            <li><a href="#" data-page="vkrn">VKRN</a></li>
+            <li><a href="#" data-page="ct-dengan-gambar">CT Dengan Gambar</a></li>
+            <li><a href="#" data-page="ct-manual">CT Manual</a></li>
+            <li><a href="#" data-page="k3">K3</a></li>
+        </ul>
+    </nav>
 
-  // Hamburger toggle
-  const hamburger = document.getElementById('hamburger');
-  const navMenu = document.getElementById('nav-menu');
-  hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('open');
-  });
-  hamburger.addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      navMenu.classList.toggle('open');
-    }
-  });
+    <main id="content">
+        </main>
 
-  // Navigation click
-  navMenu.querySelectorAll('li').forEach(li => {
-    li.addEventListener('click', async () => {
-      navMenu.classList.remove('open');
-      await loadPage(li.dataset.page);
-    });
-  });
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerBtn = document.querySelector('.hamburger-menu');
+            const sidebar = document.querySelector('.sidebar');
+            const pageTitleElement = document.getElementById('page-title');
+            const contentContainer = document.getElementById('content');
+            const navLinks = document.querySelectorAll('.sidebar ul li a');
 
-  // Load page content
-  async function loadPage(pageKey) {
-    const page = pages[pageKey];
-    if (!page) return;
-    document.getElementById('page-title').textContent = page.title;
-    const main = document.getElementById('main-content');
-    main.innerHTML = 'Loading...';
-    let content = page.content();
-    if (content instanceof Promise) {
-      content = await content;
-    }
-    main.innerHTML = content;
-    if(pageKey === 'kct') {
-      document.getElementById('btn-kct').onclick = () => {
-        window.open('https://pdpjpwt.my.id/', '_blank');
-      };
-    }
-    if(pageKey === 'vkrn') {
-      document.getElementById('btn-vkrn').onclick = () => {
-        window.open('https://tewbo.my.id/', '_blank');
-      };
-    }
-    if(pageKey === 'ct-gambar') {
-      setupCTGambar();
-    }
-    if(pageKey === 'ct-manual') {
-      setupCTManual();
-    }
-  }
+            hamburgerBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+            });
 
-  // Fetch CSV and parse
-  async function fetchCSV(filename) {
-    try {
-      const res = await fetch(filename);
-      if(!res.ok) throw new Error('File not found');
-      const text = await res.text();
-      return parseCSV(text);
-    } catch(e) {
-      return [["Error loading file"]];
-    }
-  }
+            document.addEventListener('click', (event) => {
+                if (!sidebar.contains(event.target) && !hamburgerBtn.contains(event.target)) {
+                    sidebar.classList.remove('open');
+                }
+            });
 
-  // Parse CSV text to array of arrays
-  function parseCSV(text) {
-    const lines = text.trim().split('\n');
-    return lines.map(line => {
-      // Split by comma, trim spaces, handle quoted commas if needed
-      // Simple split for now
-      return line.split(',').map(cell => cell.trim());
-    });
-  }
+            navLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const page = event.target.getAttribute('data-page');
+                    loadPage(page);
+                    sidebar.classList.remove('open');
+                });
+            });
 
-  // Render table from array data, with special center alignment for urban col 3 & 4
-  function renderTable(data, isUrban) {
-    if(!data || data.length === 0) return '<p>Tidak ada data</p>';
-    let tableClass = isUrban ? 'urban-table' : '';
-    let html = `<table class="${tableClass}"><thead><tr>`;
-    data[0].forEach(head => {
-      html += `<th>${head}</th>`;
-    });
-    html += `</tr></thead><tbody>`;
-    for(let i=1; i<data.length; i++) {
-      html += `<tr>`;
-      data[i].forEach(cell => {
-        html += `<td>${cell}</td>`;
-      });
-      html += `</tr>`;
-    }
-    html += `</tbody></table>`;
-    return html;
-  }
+            const loadPage = (pageName) => {
+                let content = '';
+                let pageTitle = '';
 
-  // CT Dengan Gambar setup
-  function setupCTGambar() {
-    const uploadInput = document.getElementById('upload-image');
-    const ocrProcess = document.getElementById('ocr-process');
-    const searchResult = document.getElementById('search-result');
-    const previewImage = document.getElementById('preview-image');
-    const btnSend = document.getElementById('btn-send-whatsapp');
-    let nomerMeter = '';
-    let nomerG = '';
+                switch (pageName) {
+                    case 'patroli-row':
+                        pageTitle = 'Patroli ROW';
+                        content = `<div class="image-container"><img src="assets/patroli.jpg" alt="Gambar Patroli"></div>`;
+                        break;
+                    case 'jadwal-piket':
+                        pageTitle = 'Jadwal Piket';
+                        content = `<div class="image-container"><img src="assets/jadwal.jpg" alt="Gambar Jadwal Piket"></div>`;
+                        break;
+                    case 'urban':
+                        pageTitle = 'Urban';
+                        fetchAndDisplayTable('assets/urban.csv', (table) => {
+                            contentContainer.innerHTML = table;
+                            const rows = contentContainer.querySelectorAll('tr');
+                            rows.forEach(row => {
+                                if (row.children[2]) row.children[2].style.textAlign = 'center';
+                                if (row.children[3]) row.children[3].style.textAlign = 'center';
+                            });
+                        });
+                        break;
+                    case 'mandorline':
+                        pageTitle = 'Mandorline';
+                        fetchAndDisplayTable('assets/mandorline.csv');
+                        break;
+                    case 'pemadaman':
+                        pageTitle = 'Pemadaman';
+                        fetchAndDisplayTable('assets/pemadaman.csv');
+                        break;
+                    case 'kct':
+                        pageTitle = 'KCT';
+                        content = `<div class="centered-content"><a href="https://pdpjpwt.my.id/" target="_blank" class="btn">Buka Halaman KCT</a></div>`;
+                        break;
+                    case 'vkrn':
+                        pageTitle = 'VKRN';
+                        content = `<div class="centered-content"><a href="https://tewbo.my.id/" target="_blank" class="btn">Buka Halaman VKRN</a></div>`;
+                        break;
+                    case 'ct-dengan-gambar':
+                        pageTitle = 'CT Dengan Gambar';
+                        content = `
+                            <div class="ocr-container">
+                                <h3>Scan Gambar</h3>
+                                <div class="upload-button-wrapper" id="upload-wrapper">
+                                    <i class="fas fa-camera upload-button"></i>
+                                    <span class="upload-button-text">Pilih Gambar</span>
+                                    <input type="file" id="image-upload" accept="image/*">
+                                </div>
+                                <div id="ocr-progress" style="display: none;">
+                                    <p>Memproses gambar...</p>
+                                    <div class="progress-bar-container">
+                                        <div id="progress-bar" class="progress-bar"></div>
+                                    </div>
+                                </div>
+                                <div id="ocr-results" class="ocr-results" style="display: none;">
+                                    <p><strong>Nomer Meter:</strong> <span id="nomer-meter"></span></p>
+                                    <p><strong>Nomer Gangguan/PK:</strong> <span id="nomer-g"></span></p>
+                                    <a id="whatsapp-link" class="btn" style="display: none;">Kirim WhatsApp</a>
+                                </div>
+                                <div id="image-preview" style="margin-top: 1rem; display:none;">
+                                    <img id="uploaded-image" style="max-width: 100%; border: 1px solid #ddd; margin-top: 10px;">
+                                </div>
+                            </div>
+                        `;
+                        break;
+                    case 'ct-manual':
+                        pageTitle = 'CT Manual';
+                        content = `
+                            <div class="form-ct-manual">
+                                <h3>Input Manual</h3>
+                                <label for="meter-manual">Nomer Meter:</label>
+                                <input type="text" id="meter-manual" placeholder="Masukkan nomer meter">
+                                <label for="g-manual">Nomer Gangguan/PK:</label>
+                                <input type="text" id="g-manual" placeholder="Masukkan nomer G">
+                                <button id="send-wa-manual" class="btn">Kirim WhatsApp</button>
+                            </div>
+                        `;
+                        break;
+                    case 'k3':
+                        pageTitle = 'K3';
+                        content = `
+                            <ul class="k3-list">
+                                <li>Melakukan Safety Briefing sebelum memulai pekerjaan</li>
+                                <li>Melakukan pekerjaan berdasar dokumen Working Permit</li>
+                                <li>Membuat dan memahami identifikasi bahaya, pengendalian resiko dan JSA pada setiap pekerjaan</li>
+                                <li>Memahami dan melakukan pekerjaan sesuai dengan langkah dan tahapan SOP</li>
+                                <li>Memahami dan melakukan alat pelindung diri sesuai SOP</li>
+                                <li>Bekerja menggunakan alat kerja sesuai SOP</li>
+                                <li>Melakukan cek tegangan menggunakan volt detector</li>
+                                <li>Melakukan pemasangan grounding pada kedua sisi sesuai SOP</li>
+                                <li>Memasang Rambu atau Lotto pada saat melaksanakan pekerjaan</li>
+                                <li>Saling mengingatkan rekan kerja yang berada pada kondisi berbahaya saat bekerja</li>
+                                <li>Tidak melanjutkan pekerjaan apabila tidak ada pengawas, working permit/work order SOP, JSA, APD dan Alat Kerja</li>
+                            </ul>
+                        `;
+                        break;
+                }
 
-    btnSend.disabled = true;
-    btnSend.onclick = () => {
-      if(!nomerMeter || !nomerG) return alert('Nomor meter atau nomor G belum ditemukan.');
-      const message = `FORMAT PERMINTAAN CLEAR TEMPER\n\nID Pelanggan/Nomor Meter : ${nomerMeter}\nNomor gangguan/PK : ${nomerG}\nKeterangan: kwh meter periksa.`;
-      const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
-    };
+                pageTitleElement.textContent = pageTitle;
+                if (pageName === 'urban' || pageName === 'mandorline' || pageName === 'pemadaman') {
+                    // Konten akan dimuat oleh fetchAndDisplayTable
+                } else {
+                    contentContainer.innerHTML = content;
+                }
 
-    uploadInput.onchange = () => {
-      const file = uploadInput.files[0];
-      if(!file) return;
-      previewImage.src = URL.createObjectURL(file);
-      ocrProcess.textContent = 'Memproses OCR...';
-      searchResult.textContent = '';
-      btnSend.disabled = true;
-      nomerMeter = '';
-      nomerG = '';
+                if (pageName === 'ct-dengan-gambar') {
+                    setupOCR();
+                } else if (pageName === 'ct-manual') {
+                    setupCTManual();
+                }
+            };
 
-      Tesseract.recognize(
-        file,
-        'ind',
-        { logger: m => {
-          ocrProcess.textContent = `OCR Progress: ${Math.round(m.progress * 100)}%`;
-        }}
-      ).then(({ data: { text } }) => {
-        ocrProcess.textContent = 'OCR selesai. Mencari nomor meter dan nomor G...';
-        // Cari nomor meter: angka berawalan 52205 (angka bisa lebih panjang)
-        const meterMatch = text.match(/52205\d*/g);
-        nomerMeter = meterMatch ? meterMatch[0] : '';
-        // Cari nomor G: huruf G diikuti angka
-        const gMatch = text.match(/G\d+/gi);
-        nomerG = gMatch ? gMatch[0] : '';
-        let resultText = `Nomor Meter: ${nomerMeter || 'Tidak ditemukan'}\nNomor G: ${nomerG || 'Tidak ditemukan'}`;
-        searchResult.textContent = resultText;
-        btnSend.disabled = !(nomerMeter && nomerG);
-      }).catch(e => {
-        ocrProcess.textContent = 'OCR gagal: ' + e.message;
-      });
-    };
-  }
+            const fetchAndDisplayTable = (filePath, callback = null) => {
+                fetch(filePath)
+                    .then(response => response.text())
+                    .then(data => {
+                        const rows = data.split('\n').filter(row => row.trim() !== '');
+                        const tableHtml = `
+                            <table>
+                                <thead>
+                                    <tr>
+                                        ${rows[0].split(',').map(header => `<th>${header.trim()}</th>`).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${rows.slice(1).map(row => {
+                                        const cells = row.split(',').map(cell => `<td>${cell.trim()}</td>`).join('');
+                                        return `<tr>${cells}</tr>`;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        `;
+                        contentContainer.innerHTML = tableHtml;
+                        if (callback) {
+                            callback(tableHtml);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching CSV:', error);
+                        contentContainer.innerHTML = `<p>Gagal memuat data tabel.</p>`;
+                    });
+            };
 
-  // CT Manual setup
-  function setupCTManual() {
-    const btnSend = document.getElementById('btn-send-whatsapp-manual');
-    btnSend.onclick = () => {
-      const meter = document.getElementById('input-meter').value.trim();
-      const g = document.getElementById('input-g').value.trim();
-      if(!meter || !g) {
-        alert('Mohon isi Nomor Meter dan Nomor G');
-        return;
-      }
-      const message = `FORMAT PERMINTAAN CLEAR TEMPER\n\nID Pelanggan/Nomor Meter : ${meter}\nNomor gangguan/PK : ${g}\nKeterangan: kwh meter periksa.`;
-      const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
-    };
-  }
+            const setupCTManual = () => {
+                const sendBtn = document.getElementById('send-wa-manual');
+                const nomerMeterInput = document.getElementById('meter-manual');
+                const nomerGInput = document.getElementById('g-manual');
 
-  // Load default page
-  loadPage('patroli');
-</script>
+                sendBtn.addEventListener('click', () => {
+                    const nomerMeter = nomerMeterInput.value.trim();
+                    const nomerG = nomerGInput.value.trim();
+                    if (nomerMeter || nomerG) {
+                        const message = `FORMAT PERMINTAAN CLEAR TEMPER%0A%0AID Pelanggan/Nomor Meter: ${nomerMeter}%0ANomor gangguan/PK: ${nomerG}%0AKeterangan: kwh meter periksa.`;
+                        const whatsappUrl = `whatsapp://send?text=${message}`;
+                        window.open(whatsappUrl, '_blank');
+                    } else {
+                        alert('Silakan isi setidaknya satu kolom.');
+                    }
+                });
+            };
+
+            const setupOCR = () => {
+                const imageUpload = document.getElementById('image-upload');
+                const uploadWrapper = document.getElementById('upload-wrapper');
+                const ocrProgressDiv = document.getElementById('ocr-progress');
+                const progressBar = document.getElementById('progress-bar');
+                const ocrResultsDiv = document.getElementById('ocr-results');
+                const nomerMeterSpan = document.getElementById('nomer-meter');
+                const nomerGSpan = document.getElementById('nomer-g');
+                const whatsappLink = document.getElementById('whatsapp-link');
+                const imagePreview = document.getElementById('image-preview');
+                const uploadedImage = document.getElementById('uploaded-image');
+
+                imageUpload.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const imageUrl = URL.createObjectURL(file);
+                        uploadedImage.src = imageUrl;
+                        imagePreview.style.display = 'block';
+
+                        uploadWrapper.style.display = 'none';
+
+                        ocrProgressDiv.style.display = 'block';
+                        progressBar.style.width = '0%';
+                        progressBar.textContent = '0%';
+
+                        Tesseract.recognize(
+                            imageUrl,
+                            'eng',
+                            {
+                                logger: m => {
+                                    if (m.status === 'recognizing text' || m.status === 'starting worker') {
+                                        const progress = Math.round(m.progress * 100);
+                                        progressBar.style.width = `${progress}%`;
+                                        progressBar.textContent = `${progress}%`;
+                                    }
+                                }
+                            }
+                        ).then(({ data: { text } }) => {
+                            ocrProgressDiv.style.display = 'none';
+                            
+                            const meterRegex = /52205\d+/;
+                            const gRegex = /[Gg]\d+/;
+
+                            const nomerMeter = text.match(meterRegex) ? text.match(meterRegex)[0] : 'Tidak Ditemukan';
+                            const nomerG = text.match(gRegex) ? text.match(gRegex)[0] : 'Tidak Ditemukan';
+
+                            nomerMeterSpan.textContent = nomerMeter;
+                            nomerGSpan.textContent = nomerG;
+                            ocrResultsDiv.style.display = 'block';
+
+                            const message = `FORMAT PERMINTAAN CLEAR TEMPER%0A%0AID Pelanggan/Nomor Meter: ${nomerMeter}%0ANomor gangguan/PK: ${nomerG}%0AKeterangan: kwh meter periksa.`;
+                            whatsappLink.href = `whatsapp://send?text=${message}`;
+                            whatsappLink.style.display = 'inline-block';
+
+                        }).catch(err => {
+                            console.error('OCR Error:', err);
+                            ocrProgressDiv.style.display = 'none';
+                            ocrResultsDiv.innerHTML = `<p>Gagal memproses gambar.</p>`;
+                            ocrResultsDiv.style.display = 'block';
+                        });
+                    }
+                });
+            };
+
+            loadPage('patroli-row');
+        });
+    </script>
 </body>
 </html>
