@@ -285,6 +285,7 @@
             <li><a href="#" data-page="patroli-row">Patroli ROW</a></li>
             <li><a href="#" data-page="jadwal-piket">Jadwal Piket</a></li>
             <li><a href="#" data-page="urban">Urban</a></li>
+            <li><a href="#" data-page="omzet">Omzet Beban</a></li>
             <li><a href="#" data-page="mandorline">Mandorline</a></li>
             <li><a href="#" data-page="pemadaman">Pemadaman</a></li>
             <li><a href="#" data-page="kct">KCT</a></li>
@@ -342,6 +343,17 @@
                     case 'urban':
                         pageTitle = 'Urban';
                         fetchAndDisplayTable('assets/urban.csv', (table) => {
+                            contentContainer.innerHTML = table;
+                            const rows = contentContainer.querySelectorAll('tr');
+                            rows.forEach(row => {
+                                if (row.children[2]) row.children[2].style.textAlign = 'center';
+                                if (row.children[3]) row.children[3].style.textAlign = 'center';
+                            });
+                        });
+                        break;
+                    case 'omzet':
+                        pageTitle = 'Omzet Beban';
+                        fetchAndDisplayTable('assets/omzet.csv', (table) => {
                             contentContainer.innerHTML = table;
                             const rows = contentContainer.querySelectorAll('tr');
                             rows.forEach(row => {
