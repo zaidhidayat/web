@@ -150,19 +150,19 @@ DNG03 191,Surenan,,
 DNG03 191 U001,Surenan,,
 DNG03 193,Surenan,,
 DNG03 195,Surenan,,
-DNG01 005 T026,Sembungan,,
-DNG01 005 T030,Sembungan,,
-DNG01 005 T042,Sembungan,,
-DNG01 024,Gudang Geodipa,,
-DNG01 035,Siterus,,
-DNG01 043,DPT,,
-DNG01 045 B006,Karangsari,,√
-DNG01 045 B007,Karangsari,,√
-DNG01 045 B009,Karangsari,,√
-DNG01 066 B002,Dieng Kulon,,
-DNG01 067 U036,Gunung Prau,,
-DNG01 081 T005,Kalilembu,,√
-DNG01 081 T010,Kalilembu,,√
+DNG01 005 T026,Sembungan,√,
+DNG01 005 T030,Sembungan,√,
+DNG01 005 T042,Sembungan,√,
+DNG01 024,Gudang Geodipa,√,
+DNG01 035,Siterus,√,
+DNG01 043,DPT,√,
+DNG01 045 B006,Karangsari,√,√
+DNG01 045 B007,Karangsari,√,√
+DNG01 045 B009,Karangsari,√,√
+DNG01 066 B002,Dieng Kulon,√,
+DNG01 067 U036,Gunung Prau,√,
+DNG01 081 T005,Kalilembu,√,√
+DNG01 081 T010,Kalilembu,√,√
 DNG01 088,Patakbanteng,√,
 DNG01 091,Patakbanteng,√,
 DNG01 093 B005,Jojogan,√,
@@ -190,9 +190,9 @@ DNG01 169 U010 T006,Surengede,√,√
 DNG01 169 U010 T007,Surengede,√,√
 DNG01 169 U013,Lobang,√,√
 DNG01 171,Rowomukti,√,√
-DNG01 180,Gataksari,,√
-DNG01 181,Gataksari,,√
-DNG01 185,Gataksari,,√
+DNG01 180,Gataksari,√,√
+DNG01 181,Gataksari,√,√
+DNG01 185,Gataksari,√,√
 DNG01 188 T019,Krakal,√,√
 DNG01 188 T025,Krakal,√,√
 DNG01 188 T036,Kandang ayam igir,√,√
