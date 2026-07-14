@@ -74,18 +74,18 @@ DNG02 208,tidak ada,,
 DNG02 208 B008,Majatengah,,
 DNG02 210 B004A,Tembok,,
 DNG02 210 B004B,Tembok,,
-DNG02 083 U020,Bakal,,
-DNG02 083 U021,Bakal,,
-DNG02 083 U021A,Bakal,,
-DNG02 083 U034,Natchamp,,
-DNG02 083 U036 S007,Buntu,,
-DNG02 083 U036 S011,Buntu,,
-DNG02 083 U036 S011A,Buntu,,
-DNG02 083 U043,Karangtengah,,
-DNG02 083 U048,Karangtengah,,
-DNG02 083 U050 B002,Karangtengah,,
-DNG02 083 U051,Karangtengah,,
-DNG02 083 U064,Simpanga ,,
+DNG02 083 U020,Bakal,√,
+DNG02 083 U021,Bakal,√,
+DNG02 083 U021A,Bakal,√,
+DNG02 083 U034,Natchamp,√,
+DNG02 083 U036 S007,Buntu,√,
+DNG02 083 U036 S011,Buntu,√,
+DNG02 083 U036 S011A,Buntu,√,
+DNG02 083 U043,Karangtengah,√,
+DNG02 083 U048,Karangtengah,√,
+DNG02 083 U050 B002,Karangtengah,√,
+DNG02 083 U051,Karangtengah,√,
+DNG02 083 U064,Simpangan,√,
 DNG02 083 U065 B018 U034,Sigandul,,√
 DNG02 083 U065 B018 U047,Bitingan,,√
 DNG02 083 U065 B018 U071,Sigemplong,,√
@@ -168,15 +168,15 @@ DNG01 091,Patakbanteng,√,
 DNG01 093 B005,Jojogan,√,
 DNG01 093 B006,Jojogan,√,
 DNG01 093 B008 S001,Jojogan,√,
-DNG01 093 T002,Patakbanteng,√,
-DNG01 096,Patakbanteng,√,
-DNG01 098,Patakbanteng,√,
-DNG01 104,Parikesit,√,
-DNG01 104 B005,Parikesit,√,
-DNG01 112,Wadasputih,√,
-DNG01 116,Wadasputih,√,
-DNG01 137,Gardu pandang,√,
-DNG01 138,Gardu pandang,√,
+DNG01 093 T002,Patakbanteng,√,√
+DNG01 096,Patakbanteng,√,√
+DNG01 098,Patakbanteng,√,√
+DNG01 104,Parikesit,√,√
+DNG01 104 B005,Parikesit,√,√
+DNG01 112,Wadasputih,√,√
+DNG01 116,Wadasputih,√,√
+DNG01 137,Gardu pandang,√,√
+DNG01 138,Gardu pandang,√,√
 DNG01 150,Tieng,√,√
 DNG01 155,Tieng,√,√
 DNG01 156,Tieng,√,√
