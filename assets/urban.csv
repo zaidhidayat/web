@@ -107,10 +107,10 @@ DNG02 083 U068,Simpangan,,
 DNG02 083 U078 B005,Pawuhan,√,
 DNG02 083 U078 B005 S002,Pawuhan,√,
 DNG02 083 U078 B038,Siglagah,√,
-DNG02 083 U085,Dieng kulon,√,
-DNG02 083 U087,Dieng kulon,√,
-DNG02 083 U090 T001,Dieng kulon,√,
-DNG02 083 U090 T002,Dieng kulon,√,
+DNG02 083 U085,Dieng kulon,√,√
+DNG02 083 U087,Dieng kulon,√,√
+DNG02 083 U090 T001,Dieng kulon,√,√
+DNG02 083 U090 T002,Dieng kulon,√,√
 DNG02 145 S015 T009,Mramen,,
 DNG02 145 S015 T020,Maron,,
 DNG02 145 S015 T056,Sitalang,,
@@ -128,12 +128,12 @@ DNG02 145 S037 B012,Kandangan,,
 DNG02 145 S045,Kaliireng,,
 DNG02 145 S046,Tidakada,,
 DNG02 145 S068,Tidak ada,,
-DNG03 072,Diengkulon,√,
-DNG03 072 U004,Diengkulon,√,
-DNG03 075 U001,Diengkulon,√,
-DNG03 075 U002,Diengkulon,√,
-DNG03 078,Diengkulon,√,
-DNG03 080,Diengkulon,√,
+DNG03 072,Diengkulon,√,√
+DNG03 072 U004,Diengkulon,√,√
+DNG03 075 U001,Diengkulon,√,√
+DNG03 075 U002,Diengkulon,√,√
+DNG03 078,Diengkulon,√,√
+DNG03 080,Diengkulon,√,√
 DNG03 087 T004,Pawuhan,√,√
 DNG03 087 T004 S002,Pawuhan,√,√
 DNG03 122,Sikalam,,
@@ -150,12 +150,12 @@ DNG03 191,Surenan,,
 DNG03 191 U001,Surenan,,
 DNG03 193,Surenan,,
 DNG03 195,Surenan,,
-DNG01 005 T026,Sembungan,√,
-DNG01 005 T030,Sembungan,√,
-DNG01 005 T042,Sembungan,√,
-DNG01 024,Gudang Geodipa,√,
-DNG01 035,Siterus,√,
-DNG01 043,DPT,√,
+DNG01 005 T026,Sembungan,√,√
+DNG01 005 T030,Sembungan,√,√
+DNG01 005 T042,Sembungan,√,√
+DNG01 024,Gudang Geodipa,√,√
+DNG01 035,Siterus,√,√
+DNG01 043,DPT,√,√
 DNG01 045 B006,Karangsari,√,√
 DNG01 045 B007,Karangsari,√,√
 DNG01 045 B009,Karangsari,√,√
