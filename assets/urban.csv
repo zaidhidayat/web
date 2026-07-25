@@ -13,7 +13,6 @@ DNG02 084 S012,Serangan Condong,√,√
 DNG02 091 U003,Condong,√,√
 DNG02 091 U005,Condong,√,√
 DNG02 092,Condong,√,√
-DNG02 093 B008,Tidak ada,,
 DNG02 098,Gembol,√,√
 DNG02 100 S012,Gembol,√,√
 DNG02 100 S022,Kandangan,√,√
@@ -49,28 +48,20 @@ DNG02 172,Bojangsark,√,
 DNG02 179,Sigebluk,√,
 DNG02 185,Purwajiwa,√,
 DNG02 186 S014,Bakalan,√,
-DNG02 187 B019 S018,tidakada,,
 DNG02 187 U024,tidakada,,
 DNG02 187 U024 B018 U002,Cemeti,√,
 DNG02 187 U024 B021,Sayangan,√,
 DNG02 187 U024 B026,Sayangan,√,
 DNG02 187 U037,Tlagabang,√,
-DNG02 187 U065 B056,Tidak ada,,
-DNG02 187 U065 B118,Tidak ada,,
 DNG02 187 U080,Kradenan,√,
 DNG02 187 U081,Kradenan,√,
-DNG02 187 U082,Tidak ada,,
 DNG02 187 U098,Gerlang,√,
 DNG02 187 U100 T020,Sidongkal,√,
 DNG02 187 U100 T020 S019,Wanapriya,√,
 DNG02 187 U100 T020 U042,Watulembu,√,
 DNG02 187 U100 T033,Kayuabang,√,
-DNG02 187 U119 S001,tidak ada,,
-DNG02 187 U120,Tidakada,,
-DNG02 187 U132,tidakada,,
 DNG02 187 U162,Sikesot,√,
 DNG02 200,Kalianget,√,
-DNG02 208,tidak ada,,
 DNG02 208 B008,Majatengah,√,
 DNG02 210 B004A,Tembok,√,
 DNG02 210 B004B,Tembok,√,
@@ -91,9 +82,7 @@ DNG02 083 U065 B018 U047,Bitingan,√,√
 DNG02 083 U065 B018 U071,Sigemplong,√,√
 DNG02 083 U065 B018 U071 S021,Pranten,√,√
 DNG02 083 U065 B018 U071A,SMP,√,√
-DNG02 083 U065 B018 U073,Tidakada,,
 DNG02 083 U065 B018 U092,Bintoro,√,√
-DNG02 083 U065 B018 U095,tidak ada,,
 DNG02 083 U065 B022,Sikalam,√,
 DNG02 083 U065 B023,Pakisan,√,
 DNG02 083 U065 B032,pakisan,√,
@@ -126,8 +115,6 @@ DNG02 145 S034,Ratamba,√,
 DNG02 145 S036,Ratamba,√,
 DNG02 145 S037 B012,Kandangan,√,
 DNG02 145 S045,Kaliireng,√,
-DNG02 145 S046,Tidakada,,
-DNG02 145 S068,Tidak ada,,
 DNG03 072,Diengkulon,√,√
 DNG03 072 U004,Diengkulon,√,√
 DNG03 075 U001,Diengkulon,√,√
