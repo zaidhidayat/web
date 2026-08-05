@@ -393,20 +393,14 @@
         const rows = contentContainer.querySelectorAll('tr');
         
         rows.forEach((row, index) => {
-            // (Opsional) Abaikan baris pertama jika itu adalah header tabel
-            // if (index === 0) return; 
-
             // Kolom 3 (Index 2)
             if (row.children[2]) {
                 row.children[2].style.textAlign = 'center';
                 
-                // Pengecekan: Jika kolom 3 ada isinya (bukan sekadar spasi kosong)
-                if (row.children[2].textContent.trim() !== '') {
+                // Beri warna background lightgreen jika ada isinya
+                // DAN pastikan ini bukan baris judul (index !== 0)
+                if (index !== 0 && row.children[2].textContent.trim() !== '') {
                     row.children[2].style.backgroundColor = 'lightgreen';
-                    
-                    // Catatan: Jika Anda ingin mewarnai SELURUH baris (bukan hanya selnya), 
-                    // hapus baris di atas dan gunakan baris di bawah ini:
-                    // row.style.backgroundColor = 'lightgreen';
                 }
             }
             
@@ -417,7 +411,6 @@
         });
     });
     break;
-
                     case 'mandorline':
                         pageTitle = 'Mandorline';
                         fetchAndDisplayTable('assets/mandorline.csv');
