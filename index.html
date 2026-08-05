@@ -387,16 +387,37 @@
     });
     break;
                     case 'omzet':
-                        pageTitle = 'Omzet Beban';
-                        fetchAndDisplayTable('assets/omzet.csv', (table) => {
-                            contentContainer.innerHTML = table;
-                            const rows = contentContainer.querySelectorAll('tr');
-                            rows.forEach(row => {
-                                if (row.children[2]) row.children[2].style.textAlign = 'center';
-                                if (row.children[3]) row.children[3].style.textAlign = 'center';
-                            });
-                        });
-                        break;
+    pageTitle = 'Omzet Beban';
+    fetchAndDisplayTable('assets/omzet.csv', (table) => {
+        contentContainer.innerHTML = table;
+        const rows = contentContainer.querySelectorAll('tr');
+        
+        rows.forEach((row, index) => {
+            // (Opsional) Abaikan baris pertama jika itu adalah header tabel
+            // if (index === 0) return; 
+
+            // Kolom 3 (Index 2)
+            if (row.children[2]) {
+                row.children[2].style.textAlign = 'center';
+                
+                // Pengecekan: Jika kolom 3 ada isinya (bukan sekadar spasi kosong)
+                if (row.children[2].textContent.trim() !== '') {
+                    row.children[2].style.backgroundColor = 'lightgreen';
+                    
+                    // Catatan: Jika Anda ingin mewarnai SELURUH baris (bukan hanya selnya), 
+                    // hapus baris di atas dan gunakan baris di bawah ini:
+                    // row.style.backgroundColor = 'lightgreen';
+                }
+            }
+            
+            // Kolom 4 (Index 3)
+            if (row.children[3]) {
+                row.children[3].style.textAlign = 'center';
+            }
+        });
+    });
+    break;
+
                     case 'mandorline':
                         pageTitle = 'Mandorline';
                         fetchAndDisplayTable('assets/mandorline.csv');
