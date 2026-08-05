@@ -345,34 +345,35 @@
     fetchAndDisplayTable('assets/urban.csv', (table) => {
         contentContainer.innerHTML = table;
         
-        // Mengambil semua baris (tr) di dalam tabel
         const rows = contentContainer.querySelectorAll('tr');
         
-        // Looping menggunakan parameter 'index' untuk mengetahui posisi baris
         rows.forEach((row, index) => {
-            
-            // Cek apakah ini baris ke-2 (index 1) atau baris ke-14 (index 13)
+            // Targetkan baris ke-2 (index 1) dan ke-14 (index 13)
             if (index === 1 || index === 13) {
                 const firstCell = row.children[0];
                 
                 if (firstCell) {
-                    // 1. Set colspan menjadi 4 pada sel pertama
+                    // 1. Gabungkan 4 kolom menjadi 1
                     firstCell.setAttribute('colspan', '4');
                     
-                    // 2. Hapus sel sisanya agar layout tidak rusak
+                    // 2. Beri warna background emas dan teks hitam agar jelas
+                    firstCell.style.backgroundColor = '#FFD700'; // Kode warna emas (Gold)
+                    firstCell.style.color = 'black';            // Warna teks hitam agar kontras
+                    firstCell.style.fontWeight = 'bold';        // (Opsional) Ditebalkan agar lebih tegas
+                    
+                    // 3. Hapus sel sisanya agar tabel tidak rusak
                     while (row.children.length > 1) {
                         row.removeChild(row.lastChild);
                     }
                 }
             } else {
-                // Untuk baris lainnya, terapkan styling rata tengah pada kolom 3 dan 4
+                // Formatting untuk baris normal
                 if (row.children[2]) row.children[2].style.textAlign = 'center';
                 if (row.children[3]) row.children[3].style.textAlign = 'center';
             }
         });
     });
     break;
-
                     case 'omzet':
                         pageTitle = 'Omzet Beban';
                         fetchAndDisplayTable('assets/omzet.csv', (table) => {
