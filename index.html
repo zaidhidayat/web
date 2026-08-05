@@ -348,28 +348,40 @@
         const rows = contentContainer.querySelectorAll('tr');
         
         rows.forEach((row, index) => {
-            // Targetkan baris ke-2 (index 1) dan ke-14 (index 13)
-            if (index === 1 || index === 2 || index === 3) {
+            // 1. Targetkan baris ke-2 (index 1) dan ke-14 (index 13) untuk digabung
+            if (index === 1 || index === 13) {
                 const firstCell = row.children[0];
                 
                 if (firstCell) {
-                    // 1. Gabungkan 4 kolom menjadi 1
                     firstCell.setAttribute('colspan', '4');
+                    firstCell.style.backgroundColor = '#FFD700'; // Background Emas
+                    firstCell.style.color = 'black';            // Teks Hitam
+                    firstCell.style.fontWeight = 'bold';        
                     
-                    // 2. Beri warna background emas dan teks hitam agar jelas
-                    firstCell.style.backgroundColor = '#FFD700'; // Kode warna emas (Gold)
-                    firstCell.style.color = 'black';            // Warna teks hitam agar kontras
-                    firstCell.style.fontWeight = 'bold';        // (Opsional) Ditebalkan agar lebih tegas
-                    
-                    // 3. Hapus sel sisanya agar tabel tidak rusak
                     while (row.children.length > 1) {
                         row.removeChild(row.lastChild);
                     }
                 }
-            } else {
-                // Formatting untuk baris normal
-                if (row.children[2]) row.children[2].style.textAlign = 'center';
-                if (row.children[3]) row.children[3].style.textAlign = 'center';
+            } 
+            // 2. Baris normal lainnya, tapi KECUALIKAN baris header (index 0)
+            else if (index > 0) {
+                // Formatting untuk Kolom 3 (Index 2)
+                if (row.children[2]) {
+                    row.children[2].style.textAlign = 'center';
+                    // Cek apakah sel ada isinya (tidak kosong)
+                    if (row.children[2].textContent.trim() !== '') {
+                        row.children[2].style.backgroundColor = 'lightgreen'; // Hijau muda agar centang terlihat
+                    }
+                }
+                
+                // Formatting untuk Kolom 4 (Index 3)
+                if (row.children[3]) {
+                    row.children[3].style.textAlign = 'center';
+                    // Cek apakah sel ada isinya (tidak kosong)
+                    if (row.children[3].textContent.trim() !== '') {
+                        row.children[3].style.backgroundColor = 'lightgreen'; // Hijau muda agar centang terlihat
+                    }
+                }
             }
         });
     });
