@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PJ BATUR</title>
+    <style>
+        :root {
+            --primary-color: #000;
+            --secondary-color: #fff;
+            --accent-color: #FFD700;
+            --text-color: #fff;
+            --text-color-dark: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color-dark);
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .header-text h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--accent-color);
+        }
+
+        .header-text h2 {
+            font-size: 0.8rem;
+            margin: 0;
+            font-weight: normal;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+        }
+
+        .hamburger-menu {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            transition: right 0.3s ease;
+            z-index: 999;
+            padding-top: 80px;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li a {
+            display: block;
+            padding: 1rem;
+            text-decoration: none;
+            color: var(--secondary-color);
+            transition: background-color 0.2s;
+        }
+
+        .sidebar li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        main {
+            padding-top: 80px;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            max-width: 100%;
+            min-height: calc(100vh - 80px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--text-color-dark);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid var(--primary-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .image-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 1rem auto;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            color: var(--secondary-color);
+            background-color: var(--accent-color);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #b8860b;
+        }
+
+        .centered-content {
+            text-align: center;
+        }
+
+        .k3-list {
+            list-style-type: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .k3-list li {
+            background: #f9f9f9;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-left: 5px solid var(--accent-color);
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-text">
+                <h1>PJ BATUR</h1>
+                <h2 id="page-title"></h2>
+            </div>
+            <button class="hamburger-menu" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <ul>
+            <li><a href="#" data-page="patroli-row">Patroli ROW</a></li>
+            <li><a href="#" data-page="jadwal-piket">Jadwal Piket</a></li>
+            <li><a href="#" data-page="urban">Urban</a></li>
+            <li><a href="#" data-page="omzet">Omzet Beban</a></li>
+            <li><a href="#" data-page="mandorline">Mandorline</a></li>
+            <li><a href="#" data-page="pemadaman">Pemadaman</a></li>
+            <li><a href="#" data-page="kct">KCT</a></li>
+            <li><a href="#" data-page="Sigap Manual">Sigap Manual</a></li>
+            <li><a href="#" data-page="vkrn_sanxing">VKRN SANXING</a></li>
+            <li><a href="#" data-page="k3">K3</a></li>
+        </ul>
+    </nav>
+
+    <main id="content">
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerBtn = document.querySelector('.hamburger-menu');
+            const sidebar = document.querySelector('.sidebar');
+            const pageTitleElement = document.getElementById('page-title');
+            const contentContainer = document.getElementById('content');
+            const navLinks = document.querySelectorAll('.sidebar ul li a');
+
+            hamburgerBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!sidebar.contains(event.target) && !hamburgerBtn.contains(event.target)) {
+                    sidebar.classList.remove('open');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const page = event.target.getAttribute('data-page');
+                    loadPage(page);
+                    sidebar.classList.remove('open');
+                });
+            });
+
+            const loadPage = (pageName) => {
+                let content = '';
+                let pageTitle = '';
+
+                switch (pageName) {
+                    case 'patroli-row':
+                        pageTitle = 'Patroli ROW';
+                        content = `<div class="image-container"><img src="assets/patroli.jpg" alt="Gambar Patroli"></div>`;
+                        break;
+                    case 'jadwal-piket':
+                        pageTitle = 'Jadwal Piket';
+                        content = `<div class="image-container"><img src="assets/jadwal.jpg" alt="Gambar Jadwal Piket"></div>`;
+                        break;
+                    case 'urban':
+                        pageTitle = 'Urban';
+                        fetchAndDisplayTable('assets/urban.csv', (table) => {
+                            contentContainer.innerHTML = table;
+                            
+                            const rows = contentContainer.querySelectorAll('tr');
+                            
+                            rows.forEach((row, index) => {
+                                // 1. Targetkan baris ke-2 (index 1) dan ke-14 (index 13) untuk digabung
+                                if (index === 1 || index === 13) {
+                                    const firstCell = row.children[0];
+                                    
+                                    if (firstCell) {
+                                        firstCell.setAttribute('colspan', '4');
+                                        firstCell.style.backgroundColor = '#FFD700'; // Background Emas
+                                        firstCell.style.color = 'black';            // Teks Hitam
+                                        firstCell.style.fontWeight = 'bold';        
+                                        
+                                        while (row.children.length > 1) {
+                                            row.removeChild(row.lastChild);
+                                        }
+                                    }
+                                } 
+                                // 2. Baris normal lainnya, tapi KECUALIKAN baris header (index 0)
+                                else if (index > 0) {
+                                    // Formatting untuk Kolom 3 (Index 2)
+                                    if (row.children[2]) {
+                                        row.children[2].style.textAlign = 'center';
+                                        // Cek apakah sel ada isinya (tidak kosong)
+                                        if (row.children[2].textContent.trim() !== '') {
+                                            row.children[2].style.backgroundColor = 'lightgreen'; // Hijau muda agar centang terlihat
+                                        }
+                                    }
+                                    
+                                    // Formatting untuk Kolom 4 (Index 3)
+                                    if (row.children[3]) {
+                                        row.children[3].style.textAlign = 'center';
+                                        // Cek apakah sel ada isinya (tidak kosong)
+                                        if (row.children[3].textContent.trim() !== '') {
+                                            row.children[3].style.backgroundColor = 'lightgreen'; // Hijau muda agar centang terlihat
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                        break;
+                    case 'omzet':
+                        pageTitle = 'Omzet Beban';
+                        fetchAndDisplayTable('assets/omzet.csv', (table) => {
+                            contentContainer.innerHTML = table;
+                            const rows = contentContainer.querySelectorAll('tr');
+                            
+                            rows.forEach((row, index) => {
+                                // Kolom 3 (Index 2)
+                                if (row.children[2]) {
+                                    row.children[2].style.textAlign = 'center';
+                                    
+                                    // Beri warna background lightgreen jika ada isinya
+                                    // DAN pastikan ini bukan baris judul (index !== 0)
+                                    if (index !== 0 && row.children[2].textContent.trim() !== '') {
+                                        row.children[2].style.backgroundColor = 'lightgreen';
+                                    }
+                                }
+                                
+                                // Kolom 4 (Index 3)
+                                if (row.children[3]) {
+                                    row.children[3].style.textAlign = 'center';
+                                }
+                            });
+                        });
+                        break;
+                    case 'mandorline':
+                        pageTitle = 'Mandorline';
+                        fetchAndDisplayTable('assets/mandorline.csv');
+                        break;
+                    case 'pemadaman':
+                        pageTitle = 'Pemadaman';
+                        fetchAndDisplayTable('assets/pemadaman.csv');
+                        break;
+                    case 'kct':
+                        pageTitle = 'KCT';
+                        content = `<div class="centered-content"><a href="https://pdpjpwt.my.id/" target="_blank" class="btn">Buka Halaman KCT</a></div>`;
+                        break;
+                    case 'Sigap Manual':
+                        pageTitle = 'Sigap Manual';
+                        content = `<div class="centered-content"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeDwcB0smGTTd1TWgalHrcT49nf3aRg9YRjGrbfZAnSX6vYmQ/viewform" target="_blank" class="btn">Sigap Manual</a></div>`;
+                        break;
+                    case 'vkrn_sanxing':
+                        pageTitle = 'VKRN SANXING';
+                        content = `<div class="centered-content"><a href="https://mashidayat24.github.io/tewbo/" target="_blank" class="btn">Buka Halaman VKRN SANXING</a></div>`;
+                        break;
+                    case 'k3':
+                        pageTitle = 'Yel-yel';
+                        content = `
+                            <ul class="k3-list">
+                                <li>Selamat Pagi</li>
+                                <li>Pagi, pagi, pagi</li>
+                                <li></li>
+                                <li>PLN ES</li>
+                                <li>Berakhlak, Andal, Terbaik</li>
+                                <li></li>
+                                <li>ELECTRINERS</li>
+                                <li>Safety, Integrity, Quality</li>
+                            </ul>
+                        `;
+                        break;
+                }
+
+                pageTitleElement.textContent = pageTitle;
+                if (pageName === 'urban' || pageName === 'mandorline' || pageName === 'pemadaman') {
+                    // Konten akan dimuat oleh fetchAndDisplayTable
+                } else {
+                    contentContainer.innerHTML = content;
+                }
+            };
+
+            const fetchAndDisplayTable = (filePath, callback = null) => {
+                fetch(filePath)
+                    .then(response => response.text())
+                    .then(data => {
+                        const rows = data.split('\n').filter(row => row.trim() !== '');
+                        const tableHtml = `
+                            <table>
+                                <thead>
+                                    <tr>
+                                        ${rows[0].split(',').map(header => `<th>${header.trim()}</th>`).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${rows.slice(1).map(row => {
+                                        const cells = row.split(',').map(cell => `<td>${cell.trim()}</td>`).join('');
+                                        return `<tr>${cells}</tr>`;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        `;
+                        contentContainer.innerHTML = tableHtml;
+                        if (callback) {
+                            callback(tableHtml);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching CSV:', error);
+                        contentContainer.innerHTML = `<p>Gagal memuat data tabel.</p>`;
+                    });
+            };
+
+            loadPage('patroli-row');
+        });
+    </script>
+</body>
+</html>
