@@ -221,7 +221,7 @@
             <li><a href="#" data-page="patroli-row">Patroli ROW</a></li>
             <li><a href="#" data-page="jadwal-piket">Jadwal Piket</a></li>
             <li><a href="#" data-page="urban">Urban</a></li>
-            <li><a href="#" data-page="omzet">Target Omzet</a></li>
+            <li><a href="#" data-page="omzet">Omzet Beban</a></li>
             <li><a href="#" data-page="hitung-omzet">Hitung Omzet</a></li>
             <li><a href="#" data-page="mandorline">Mandorline</a></li>
             <li><a href="#" data-page="pemadaman">Pemadaman</a></li>
@@ -259,6 +259,12 @@
                     const page = event.target.getAttribute('data-page');
                     loadPage(page);
                     sidebar.classList.remove('open');
+                    
+                    // Menggulir ke paling atas saat menu diklik dengan efek halus
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
                 });
             });
 
@@ -351,7 +357,7 @@
                         content = `
                         <div class="bg-slate-50 text-slate-800 font-sans selection:bg-blue-200 rounded-lg pb-10">
                             <!-- Navbar -->
-                            <div class="bg-blue-600 text-white shadow-md rounded-t-lg">
+                            <div id="hitung-omzet-navbar" class="bg-blue-600 text-white shadow-md rounded-t-lg transition-all duration-300">
                                 <div class="max-w-3xl mx-auto px-4">
                                     <div class="flex items-center justify-between h-16">
                                         <div class="flex items-center space-x-2 font-bold text-xl">
@@ -376,20 +382,15 @@
                                     
                                     <!-- SECTION 1 FASA -->
                                     <div id="section-1fasa" class="p-6 block fade-in">
-                                        <div class="flex items-center space-x-2 mb-6 border-b pb-4">
-                                            <i data-lucide="activity" class="h-5 w-5 text-blue-500"></i>
-                                            <h2 class="text-lg font-bold text-slate-700">Penyeimbang 1 Fasa (X1 & X4)</h2>
-                                        </div>
-
                                         <div class="space-y-4 mb-6">
                                             <div class="flex items-center space-x-2 sm:space-x-3">
                                                 <label class="text-base font-bold text-slate-700 w-8">X1</label>
-                                                <input type="number" id="input-x1" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                                                <input type="number" id="input-x1" onfocus="window.hideHitungOmzetNavbar()" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
                                                 <span class="text-sm font-medium text-slate-600 whitespace-nowrap">Ampere</span>
                                             </div>
                                             <div class="flex items-center space-x-2 sm:space-x-3">
                                                 <label class="text-base font-bold text-slate-700 w-8">X4</label>
-                                                <input type="number" id="input-x4" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                                                <input type="number" id="input-x4" onfocus="window.hideHitungOmzetNavbar()" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
                                                 <span class="text-sm font-medium text-slate-600 whitespace-nowrap">Ampere</span>
                                             </div>
                                         </div>
@@ -405,25 +406,20 @@
 
                                     <!-- SECTION 3 FASA -->
                                     <div id="section-3fasa" class="p-6 hidden fade-in">
-                                        <div class="flex items-center space-x-2 mb-6 border-b pb-4">
-                                            <i data-lucide="target" class="h-5 w-5 text-blue-500"></i>
-                                            <h2 class="text-lg font-bold text-slate-700">Penyeimbang 3 Fasa (R, S, T)</h2>
-                                        </div>
-
                                         <div class="space-y-4 mb-6">
                                             <div class="flex items-center space-x-2 sm:space-x-3">
                                                 <label class="text-base font-bold text-slate-700 w-16">Fasa R</label>
-                                                <input type="number" id="input-r" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                                                <input type="number" id="input-r" onfocus="window.hideHitungOmzetNavbar()" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
                                                 <span class="text-sm font-medium text-slate-600 whitespace-nowrap">Ampere</span>
                                             </div>
                                             <div class="flex items-center space-x-2 sm:space-x-3">
                                                 <label class="text-base font-bold text-slate-700 w-16">Fasa S</label>
-                                                <input type="number" id="input-s" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                                                <input type="number" id="input-s" onfocus="window.hideHitungOmzetNavbar()" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
                                                 <span class="text-sm font-medium text-slate-600 whitespace-nowrap">Ampere</span>
                                             </div>
                                             <div class="flex items-center space-x-2 sm:space-x-3">
                                                 <label class="text-base font-bold text-slate-700 w-16">Fasa T</label>
-                                                <input type="number" id="input-t" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                                                <input type="number" id="input-t" onfocus="window.hideHitungOmzetNavbar()" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
                                                 <span class="text-sm font-medium text-slate-600 whitespace-nowrap">Ampere</span>
                                             </div>
                                         </div>
@@ -560,7 +556,25 @@
             `;
         };
 
+        window.hideHitungOmzetNavbar = function() {
+            const navbar = document.getElementById('hitung-omzet-navbar');
+            if (navbar) {
+                navbar.classList.add('hidden');
+                // Menggulirkan perlahan ke atas agar input tidak tertutup keyboard
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        };
+
+        window.showHitungOmzetNavbar = function() {
+            const navbar = document.getElementById('hitung-omzet-navbar');
+            if (navbar) {
+                navbar.classList.remove('hidden');
+            }
+        };
+
         window.hitung1Fasa = function() {
+            window.showHitungOmzetNavbar();
+            
             const container = document.getElementById('result-1fasa');
             container.classList.remove('hidden');
             
@@ -643,6 +657,8 @@
         };
 
         window.hitung3Fasa = function() {
+            window.showHitungOmzetNavbar();
+            
             const container = document.getElementById('result-3fasa');
             container.classList.remove('hidden');
             
@@ -734,4 +750,4 @@
         };
     </script>
 </body>
-                </html>
+    </html>
