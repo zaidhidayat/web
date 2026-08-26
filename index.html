@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PJ BATUR</title>
+    <!-- Menggunakan Tailwind CSS untuk styling komponen omzet -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Menggunakan Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             --primary-color: #000;
@@ -187,6 +191,15 @@
             font-size: 1.1rem;
             line-height: 1.5;
         }
+
+        /* Transisi halus saat berganti tab atau memunculkan hasil */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -209,11 +222,11 @@
             <li><a href="#" data-page="jadwal-piket">Jadwal Piket</a></li>
             <li><a href="#" data-page="urban">Urban</a></li>
             <li><a href="#" data-page="omzet">Omzet Beban</a></li>
+            <li><a href="#" data-page="hitung-omzet">Hitung Omzet</a></li>
             <li><a href="#" data-page="mandorline">Mandorline</a></li>
             <li><a href="#" data-page="pemadaman">Pemadaman</a></li>
             <li><a href="#" data-page="kct">KCT</a></li>
             <li><a href="#" data-page="Sigap Manual">Sigap Manual</a></li>
-            <li><a href="#" data-page="Njalok_p0">Njalok Pe0</a></li>
             <li><a href="#" data-page="vkrn_sanxing">VKRN SANXING</a></li>
             <li><a href="#" data-page="k3">K3</a></li>
         </ul>
@@ -333,6 +346,102 @@
                             });
                         });
                         break;
+                    case 'hitung-omzet':
+                        pageTitle = 'Hitung Omzet';
+                        content = `
+                        <div class="bg-slate-50 text-slate-800 font-sans selection:bg-blue-200 rounded-lg pb-10">
+                            <!-- Navbar -->
+                            <div class="bg-blue-600 text-white shadow-md rounded-t-lg">
+                                <div class="max-w-3xl mx-auto px-4">
+                                    <div class="flex items-center justify-between h-16">
+                                        <div class="flex items-center space-x-2 font-bold text-xl">
+                                            <i data-lucide="zap" class="h-6 w-6 text-yellow-300"></i>
+                                            <span>Hitung Omzet</span>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button id="btn-tab-1fasa" onclick="window.switchTab('1fasa')" class="px-4 py-2 rounded-md text-sm font-medium transition-colors bg-blue-800 text-white shadow-inner border border-blue-900">
+                                                1 Fasa
+                                            </button>
+                                            <button id="btn-tab-3fasa" onclick="window.switchTab('3fasa')" class="px-4 py-2 rounded-md text-sm font-medium transition-colors text-blue-100 hover:bg-blue-500">
+                                                3 Fasa
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Main Content -->
+                            <div class="max-w-3xl mx-auto p-4 md:p-6 lg:p-8 mt-4">
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                                    
+                                    <!-- SECTION 1 FASA -->
+                                    <div id="section-1fasa" class="p-6 block fade-in">
+                                        <div class="flex items-center space-x-2 mb-6 border-b pb-4">
+                                            <i data-lucide="activity" class="h-5 w-5 text-blue-500"></i>
+                                            <h2 class="text-lg font-bold text-slate-700">Penyeimbang 1 Fasa (X1 & X4)</h2>
+                                        </div>
+
+                                        <div class="space-y-4 mb-6">
+                                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                                <label class="text-base font-bold text-slate-700 w-8">X1</label>
+                                                <input type="number" id="input-x1" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                                                <span class="text-sm font-medium text-slate-600 whitespace-nowrap">Ampere</span>
+                                            </div>
+                                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                                <label class="text-base font-bold text-slate-700 w-8">X4</label>
+                                                <input type="number" id="input-x4" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                                                <span class="text-sm font-medium text-slate-600 whitespace-nowrap">Ampere</span>
+                                            </div>
+                                        </div>
+
+                                        <button onclick="window.hitung1Fasa()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors focus:ring-4 focus:ring-blue-200 border-none cursor-pointer">
+                                            <i data-lucide="calculator" class="h-5 w-5"></i>
+                                            <span>Hitung Penyeimbang</span>
+                                        </button>
+
+                                        <!-- Container Hasil 1 Fasa -->
+                                        <div id="result-1fasa" class="mt-8 hidden fade-in"></div>
+                                    </div>
+
+                                    <!-- SECTION 3 FASA -->
+                                    <div id="section-3fasa" class="p-6 hidden fade-in">
+                                        <div class="flex items-center space-x-2 mb-6 border-b pb-4">
+                                            <i data-lucide="target" class="h-5 w-5 text-blue-500"></i>
+                                            <h2 class="text-lg font-bold text-slate-700">Penyeimbang 3 Fasa (R, S, T)</h2>
+                                        </div>
+
+                                        <div class="space-y-4 mb-6">
+                                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                                <label class="text-base font-bold text-slate-700 w-16">Fasa R</label>
+                                                <input type="number" id="input-r" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                                                <span class="text-sm font-medium text-slate-600 whitespace-nowrap">Ampere</span>
+                                            </div>
+                                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                                <label class="text-base font-bold text-slate-700 w-16">Fasa S</label>
+                                                <input type="number" id="input-s" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                                                <span class="text-sm font-medium text-slate-600 whitespace-nowrap">Ampere</span>
+                                            </div>
+                                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                                <label class="text-base font-bold text-slate-700 w-16">Fasa T</label>
+                                                <input type="number" id="input-t" placeholder="0" class="w-24 sm:w-32 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                                                <span class="text-sm font-medium text-slate-600 whitespace-nowrap">Ampere</span>
+                                            </div>
+                                        </div>
+
+                                        <button onclick="window.hitung3Fasa()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors focus:ring-4 focus:ring-blue-200 border-none cursor-pointer">
+                                            <i data-lucide="calculator" class="h-5 w-5"></i>
+                                            <span>Hitung & Simulasikan</span>
+                                        </button>
+
+                                        <!-- Container Hasil 3 Fasa -->
+                                        <div id="result-3fasa" class="mt-8 hidden fade-in"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                        break;
                     case 'mandorline':
                         pageTitle = 'Mandorline';
                         fetchAndDisplayTable('assets/mandorline.csv');
@@ -348,10 +457,6 @@
                     case 'Sigap Manual':
                         pageTitle = 'Sigap Manual';
                         content = `<div class="centered-content"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeDwcB0smGTTd1TWgalHrcT49nf3aRg9YRjGrbfZAnSX6vYmQ/viewform" target="_blank" class="btn">Sigap Manual</a></div>`;
-                        break;
-                    case 'Njalok_p0':
-                        pageTitle = 'Njaluk Penol';
-                        content = `<div class="centered-content"><a href="https://www.appsheet.com/start/6def9c97-cb1d-43d8-84fb-38314047e433#appName=ComcenDJTY-1509236&group=%5B%7B%22Column%22%3A%22STATUS%22%2C%22Order%22%3A%22Ascending%22%7D%5D&page=detail&row=e7666dc3&search=G5226081502613&sort=%5B%7B%22Column%22%3A%22TANGGAL%22%2C%22Order%22%3A%22Ascending%22%7D%5D&table=CTT&userfilters=%5B%5D&view=CTT_Detail" target="_blank" class="btn">Njalok Penol</a></div>`;
                         break;
                     case 'vkrn_sanxing':
                         pageTitle = 'VKRN SANXING';
@@ -379,6 +484,10 @@
                     // Konten akan dimuat oleh fetchAndDisplayTable
                 } else {
                     contentContainer.innerHTML = content;
+                }
+
+                if (pageName === 'hitung-omzet' && typeof lucide !== 'undefined') {
+                    lucide.createIcons();
                 }
             };
 
@@ -415,6 +524,214 @@
 
             loadPage('patroli-row');
         });
+
+        // Global functions untuk Hitung Omzet
+        window.switchTab = function(tabId) {
+            const sec1 = document.getElementById('section-1fasa');
+            const sec3 = document.getElementById('section-3fasa');
+            const btn1 = document.getElementById('btn-tab-1fasa');
+            const btn3 = document.getElementById('btn-tab-3fasa');
+
+            if (tabId === '1fasa') {
+                sec1.classList.remove('hidden');
+                sec1.classList.add('block');
+                sec3.classList.add('hidden');
+                sec3.classList.remove('block');
+
+                btn1.className = "px-4 py-2 rounded-md text-sm font-medium transition-colors bg-blue-800 text-white shadow-inner border border-blue-900";
+                btn3.className = "px-4 py-2 rounded-md text-sm font-medium transition-colors text-blue-100 hover:bg-blue-500 border border-transparent";
+            } else {
+                sec3.classList.remove('hidden');
+                sec3.classList.add('block');
+                sec1.classList.add('hidden');
+                sec1.classList.remove('block');
+
+                btn3.className = "px-4 py-2 rounded-md text-sm font-medium transition-colors bg-blue-800 text-white shadow-inner border border-blue-900";
+                btn1.className = "px-4 py-2 rounded-md text-sm font-medium transition-colors text-blue-100 hover:bg-blue-500 border border-transparent";
+            }
+        };
+
+        window.getErrorHtml = function(msg) {
+            return `
+                <div class="p-4 bg-red-50 text-red-700 rounded-lg flex items-start space-x-3 border border-red-100">
+                    <i data-lucide="alert-circle" class="h-5 w-5 shrink-0 mt-0.5"></i>
+                    <p>${msg}</p>
+                </div>
+            `;
+        };
+
+        window.hitung1Fasa = function() {
+            const container = document.getElementById('result-1fasa');
+            container.classList.remove('hidden');
+            
+            // Re-trigger animasi
+            container.classList.remove('fade-in');
+            void container.offsetWidth; 
+            container.classList.add('fade-in');
+
+            const valX1 = parseFloat(document.getElementById('input-x1').value);
+            const valX4 = parseFloat(document.getElementById('input-x4').value);
+
+            if (isNaN(valX1) || isNaN(valX4)) {
+                container.innerHTML = window.getErrorHtml('Mohon masukkan angka yang valid untuk X1 dan X4.');
+                lucide.createIcons();
+                return;
+            }
+
+            const selisih = Math.abs(valX1 - valX4);
+            const pindah = Math.round(selisih / 2);
+
+            if (valX1 === valX4) {
+                container.innerHTML = `
+                    <div class="p-5 bg-green-50 rounded-xl border border-green-200 text-center mt-6">
+                        <p class="text-green-700 font-medium text-lg">Beban sudah seimbang!</p>
+                        <p class="text-green-600 text-sm mt-1">Tidak perlu ada pemindahan beban.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let sumberTinggi = valX1 > valX4 ? 'X1' : 'X4';
+            let targetRendah = valX1 > valX4 ? 'X4' : 'X1';
+            
+            let hasilOmzetTinggi = Math.round(Math.max(valX1, valX4) - pindah);
+            let hasilOmzetRendah = Math.round(Math.min(valX1, valX4) + pindah);
+
+            let simulasiHtml = '';
+            if (sumberTinggi === 'X1') {
+                simulasiHtml = `
+                    <div class="flex justify-between items-center p-3 bg-red-50 text-red-800 rounded border border-red-100">
+                        <span>X1 = ${valX1} - ${pindah}</span>
+                        <span class="font-bold text-slate-800">= ${hasilOmzetTinggi} A</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-green-50 text-green-800 rounded border border-green-100">
+                        <span>X4 = ${valX4} + ${pindah}</span>
+                        <span class="font-bold text-slate-800">= ${hasilOmzetRendah} A</span>
+                    </div>
+                `;
+            } else {
+                simulasiHtml = `
+                    <div class="flex justify-between items-center p-3 bg-green-50 text-green-800 rounded border border-green-100">
+                        <span>X1 = ${valX1} + ${pindah}</span>
+                        <span class="font-bold text-slate-800">= ${hasilOmzetRendah} A</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-red-50 text-red-800 rounded border border-red-100">
+                        <span>X4 = ${valX4} - ${pindah}</span>
+                        <span class="font-bold text-slate-800">= ${hasilOmzetTinggi} A</span>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="space-y-4 mt-6">
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg shadow-sm">
+                        <p class="text-blue-800 leading-relaxed text-sm md:text-base">
+                            Pindah <span class="font-bold bg-blue-200 px-1 rounded">${pindah} Ampere</span> (${sumberTinggi}) ke ${targetRendah}.
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 shadow-inner">
+                        <div class="bg-white p-4 rounded-lg border border-slate-200">
+                            <h4 class="text-sm font-semibold text-slate-700 mb-3">Simulasi Omzet Beban:</h4>
+                            <div class="space-y-3 font-mono text-sm md:text-base">
+                                ${simulasiHtml}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        };
+
+        window.hitung3Fasa = function() {
+            const container = document.getElementById('result-3fasa');
+            container.classList.remove('hidden');
+            
+            // Re-trigger animasi
+            container.classList.remove('fade-in');
+            void container.offsetWidth; 
+            container.classList.add('fade-in');
+
+            const valR = parseFloat(document.getElementById('input-r').value);
+            const valS = parseFloat(document.getElementById('input-s').value);
+            const valT = parseFloat(document.getElementById('input-t').value);
+
+            if (isNaN(valR) || isNaN(valS) || isNaN(valT)) {
+                container.innerHTML = window.getErrorHtml('Mohon masukkan angka yang valid untuk fasa R, S, dan T.');
+                lucide.createIcons();
+                return;
+            }
+
+            const total = Math.round(valR + valS + valT);
+            const rataRata = Math.round(total / 3);
+
+            const evaluasi = [
+                { nama: 'R', nilai: valR, selisih: valR - rataRata },
+                { nama: 'S', nilai: valS, selisih: valS - rataRata },
+                { nama: 'T', nilai: valT, selisih: valT - rataRata },
+            ];
+
+            const seimbang = evaluasi.every(f => Math.abs(f.selisih) === 0);
+
+            if (seimbang) {
+                container.innerHTML = `
+                    <div class="p-5 bg-green-50 rounded-xl border border-green-200 text-center mt-6">
+                        <p class="text-green-700 font-medium text-lg">Semua Fasa Sudah Seimbang!</p>
+                        <p class="text-green-600 text-sm mt-1">Setiap fasa memiliki arus rata-rata ${rataRata}A.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let listHtml = '';
+            evaluasi.forEach(fasa => {
+                const selisihAbs = Math.abs(Math.round(fasa.selisih));
+                const isSeimbang = selisihAbs === 0;
+                
+                let style = "bg-green-50 text-green-800 border-green-100";
+                let hitungTeks = `${fasa.nilai}`;
+
+                if (!isSeimbang) {
+                    if (fasa.selisih > 0) {
+                        style = "bg-red-50 text-red-800 border-red-100";
+                        hitungTeks = `${fasa.nilai} - ${selisihAbs}`;
+                    } else {
+                        style = "bg-blue-50 text-blue-800 border-blue-100";
+                        hitungTeks = `${fasa.nilai} + ${selisihAbs}`;
+                    }
+                }
+
+                listHtml += `
+                    <div class="flex justify-between items-center p-3 rounded border ${style}">
+                        <span>${fasa.nama} = ${hitungTeks}</span>
+                        <span class="font-bold text-slate-800">= ${rataRata} A</span>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="space-y-4 mt-6">
+                    <div class="bg-slate-800 text-white p-5 rounded-xl flex justify-between items-center shadow-md">
+                        <div>
+                            <p class="text-slate-400 text-sm mb-1">Total Beban</p>
+                            <p class="text-xl font-bold">${total}A</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-blue-300 text-sm mb-1">Patokan Seimbang (Rata-rata)</p>
+                            <p class="text-2xl font-bold text-yellow-400">${rataRata}A <span class="text-sm font-normal text-slate-300">/ fasa</span></p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 shadow-inner mt-4">
+                        <div class="bg-white p-4 rounded-lg border border-slate-200">
+                            <h4 class="text-sm font-semibold text-slate-700 mb-3">Simulasi Penyeimbangan:</h4>
+                            <div class="space-y-3 font-mono text-sm md:text-base">
+                                ${listHtml}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        };
     </script>
 </body>
-</html>
+                </html>
